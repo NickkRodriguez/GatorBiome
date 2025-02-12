@@ -7,3 +7,8 @@
     - Nick Rodriguez: Oversee project progress, set timelines, and ensure adherence to objectives. Work on ML algorithms and training. 
     - Lachyn Almazova: Frontend/ML.
     - David Alvarez: Work on ML algorithms and training.
+
+- Docs:
+    - Main Pipeline is, for now, in ProjectPipelineTest
+    - main.py controls main training/testing loop
+    - models/name_model.py are model classes, imported into main
