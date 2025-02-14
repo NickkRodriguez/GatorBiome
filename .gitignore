@@ -1,0 +1,44 @@
+# Virtual environments
+venv/
+.env/
+*.venv/
+
+# Conda specific ones
+*.conda/
+*.condarc
+*.conda_env/
+*.conda_lock/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS system files (main 3)
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.swp
+*~
+
+# Logs and debugging
+*.log
+*.out
+*.err
+
+# IDE and editor specific files
+.vscode/                
+.idea/
+.sublime-workspace
+.sublime-project
+*.nbconvert.ipynb
+.Rhistory
+.Rproj.user/
+__pycache__/
+*.spyproject/
+*.ropeproject/
