@@ -67,24 +67,24 @@ for r in range(runs):
     # Training the models and storing the evaluation results
     
     # decision tree
-    dt.train(X_train_scaled, y_train_enc)
-    dtEvalResults[r] = dt.predict(X_test_scaled, y_test_enc)
+    dt.train(X_train_scaled_standard, y_train)
+    dtEvalResults[r] = dt.predict(X_test_scaled_standard, y_test)
     
     # random forest
-    rf.train(X_train_scaled, y_train_enc)
-    rfEvalResults[r] = rf.predict(X_test_scaled, y_test_enc)
+    rf.train(X_train_scaled_standard, y_train)
+    rfEvalResults[r] = rf.predict(X_test_scaled_standard, y_test)
     
     # gradient boosting
-    gb.train(X_train_scaled, y_train_enc)
-    gbEvalResults[r] = gb.predict(X_test_scaled, y_test_enc)
+    gb.train(X_train_scaled_standard, y_train)
+    gbEvalResults[r] = gb.predict(X_test_scaled_standard, y_test)
 
     # k-nearest neighbors
-    knn.train(X_train_scaled, y_train_enc)
-    knnEvalResults[r] = knn.predict(X_test_scaled, y_test_enc)
+    knn.train(X_train_scaled_standard, y_train)
+    knnEvalResults[r] = knn.predict(X_test_scaled_standard, y_test)
     
     # logistic regression
-    lr.train(X_train_scaled, y_train_enc)
-    lrEvalResults[r] = lr.predict(X_test_scaled, y_test_enc)
+    lr.train(X_train_scaled_standard, y_train)
+    lrEvalResults[r] = lr.predict(X_test_scaled_standard, y_test)
 
 #once done with all models, average the results and score
 dt_avg_accuracy = np.mean(dtEvalResults[:,0])
