@@ -18,6 +18,9 @@ import numpy as np
 #importing models
 from models.dt_model import dt_model
 from models.rf_model import rf_model
+from models.gb_model import gb_model
+from models.knn_model import knn_model
+from models.lr_model import lr_model
 
 #choose seed for run
 seed = 123456
@@ -25,7 +28,6 @@ seed = 123456
 runs = 10
 
 #Loading wine dataset as proof of concept
-
 df = pd.read_csv("../wine.csv")
 target_column = "Wine"
 X = df.drop(columns=[target_column])
@@ -33,14 +35,18 @@ y = df[target_column]
 df.head()
 
 #define helper models
-
 dt = dt_model()
 rf = rf_model()
-
+gb = gb_model()
+knn = knn_model()
+lr = lr_model()
 
 #define results arrays
 dtEvalResults = np.zeros((runs, 4))
 rfEvalResults = np.zeros((runs,4))
+gbEvalResults = np.zeros((runs, 4))
+knnEvalResults = np.zeros((runs, 4))
+lrEvalResults = np.zeros((runs, 4))
 
 for r in range(runs):
     #first, split data
@@ -58,11 +64,27 @@ for r in range(runs):
     X_train_scaled_standard = scaler.fit_transform(X_train)
     X_test_scaled_standard = scaler.transform(X_test)
 
-    #now pass to helper models
-    dt.train(X_train_scaled_standard, y_train)
-    dtEvalResults[r] = dt.predict(X_test_scaled_standard, y_test)
-
+    # Training the models and storing the evaluation results
     
+    # decision tree
+    dt.train(X_train_scaled, y_train_enc)
+    dtEvalResults[r] = dt.predict(X_test_scaled, y_test_enc)
+    
+    # random forest
+    rf.train(X_train_scaled, y_train_enc)
+    rfEvalResults[r] = rf.predict(X_test_scaled, y_test_enc)
+    
+    # gradient boosting
+    gb.train(X_train_scaled, y_train_enc)
+    gbEvalResults[r] = gb.predict(X_test_scaled, y_test_enc)
+
+    # k-nearest neighbors
+    knn.train(X_train_scaled, y_train_enc)
+    knnEvalResults[r] = knn.predict(X_test_scaled, y_test_enc)
+    
+    # logistic regression
+    lr.train(X_train_scaled, y_train_enc)
+    lrEvalResults[r] = lr.predict(X_test_scaled, y_test_enc)
 
 #once done with all models, average the results and score
 dt_avg_accuracy = np.mean(dtEvalResults[:,0])
