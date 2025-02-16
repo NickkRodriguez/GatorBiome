@@ -9,9 +9,10 @@
     - David Alvarez: Work on ML algorithms and training.
 
 - Docs:
-    - Main Pipeline is, for now, in ProjectPipelineTest
-    - main.py controls main training/testing loop
-    - models/name_model.py are model classes, imported into main
+    - The main pipeline is now in ProjectPipelineTest in the Jupyter notebook: main.ipynb
+    - main.ipynb currently controls main training/testing loop, model training, evaluation, and result presentation.
+    - The model classes (e.g., models/name_model.py) are still used and imported into the notebook.
+    - The main.py script has been archived in the archive/ directory for reference.
 
 
 ## Setup Instructions
