@@ -10,4 +10,5 @@ class lda_model():
 
     def predict(self, X_test, y_test):
         pred = self.lda.predict(X_test)
-        return evaluate_model(y_test, pred)
+        prob = self.lda.predict_proba(X_test)
+        return evaluate_model(y_test, pred, prob)

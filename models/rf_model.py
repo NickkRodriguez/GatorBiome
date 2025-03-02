@@ -14,4 +14,5 @@ class rf_model():
     
     def predict(self, X_test, y_test):
         pred = self.rf.predict(X_test)
-        return evaluate_model(y_test, pred)
+        prob = self.rf.predict_proba(X_test)
+        return evaluate_model(y_test, pred, prob)

@@ -10,4 +10,5 @@ class gnb_model():
 
     def predict(self, X_test, y_test):
         pred = self.gnb.predict(X_test)
-        return evaluate_model(y_test, pred)
+        prob = self.gnb.predict_proba(X_test)
+        return evaluate_model(y_test, pred, prob)
