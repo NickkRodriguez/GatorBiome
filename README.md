@@ -9,10 +9,11 @@
     - David Alvarez: Work on ML algorithms and training.
 
 - Docs:
-    - The main pipeline is now in ProjectPipelineTest in the Jupyter notebook: main.ipynb
-    - main.ipynb currently controls main training/testing loop, model training, evaluation, and result presentation.
-    - The model classes (e.g., models/name_model.py) are still used and imported into the notebook.
-    - The main.py script has been archived in the archive/ directory for reference.
+    - The main pipeline is now in the Jupyter notebook: main.ipynb (found in the root directory), which handles model training, evaluation, and results presentation.
+
+    - Model classes are located in the models/ directory, and utility functions are in utils/. The main.py script and previous files and folders have been archived in archive/; delete if you created and no longer need.
+
+    - Dataset files are in the data/ directory.
 
 
 ## Setup Instructions
