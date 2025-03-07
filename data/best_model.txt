@@ -1,0 +1,6 @@
+Best Model: ExtraTrees
+AUC: 0.99766
+Accuracy: 0.96154
+Precision: 0.96435
+Recall: 0.96154
+F1: 0.96146

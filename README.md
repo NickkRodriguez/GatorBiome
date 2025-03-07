@@ -1,19 +1,26 @@
 # GatorBiome
-- Overall objectives: What the team is trying to achieve?
-    - The team will strive to achieve a machine learning algorithm that can map data of the human gut microbiome to disease states. The end goal of the project is to use this algorithm to predict disease through microbiome readings.
-      
-- Individual responsibilities: What each team member is expected to do?
-    - Connor McLoon: Work on ML algorithms and training. Helping with data cleaning.
-    - Nick Rodriguez: Oversee project progress, set timelines, and ensure adherence to objectives. Work on ML algorithms and training. 
-    - Lachyn Almazova: Frontend/ML.
-    - David Alvarez: Work on ML algorithms and training.
 
-- Docs:
-    - The main pipeline is now in the Jupyter notebook: main.ipynb (found in the root directory), which handles model training, evaluation, and results presentation.
+## Objectives
+The team aims to develop a **machine learning algorithm** that maps human gut microbiome data to disease states. The ultimate goal is to use this algorithm to **predict diseases** based on microbiome readings.
 
-    - Model classes are located in the models/ directory, and utility functions are in utils/. The main.py script and previous files and folders have been archived in archive/; delete if you created and no longer need.
+## Team Responsibilities
+- **Nick Rodriguez** – Team lead: Oversees progress, sets timelines, ensures adherence to objectives, and contributes to ML algorithms and training.
+- **Connor McLoon** – Works on ML algorithms and training; assists with data cleaning.
+- **Lachyn Almazova** – Focuses on frontend development and ML integration.
+- **David Alvarez** – Works on ML algorithms and training.
 
-    - Dataset files are in the data/ directory.
+## Docs
+
+### Project Structure
+- `training_pipeline.ipynb` – Model training.
+- `feature_engineering.ipynb` – Feature selection & evaluation.
+- Model classes are in `models/`, and utility functions are in `utils/`.
+- Datasets (currently a placeholder) are in `data/`.
+- The best-performing model from training is stored in `data/best_model.txt`.
+
+### Archival
+- `main.ipynb` has been archived in `archive/` for reference.
+- Older files, including `main.py`, are in `archive/deprecated/`—delete if no longer needed.
 
 
 ## Setup Instructions
