@@ -1,6 +1,6 @@
-Best Model: ExtraTrees
-AUC: 0.99766
-Accuracy: 0.96154
-Precision: 0.96435
-Recall: 0.96154
-F1: 0.96146
+Best Model: Non-linear SVM
+AUC: 0.99798
+Accuracy: 0.96364
+Precision: 0.96602
+Recall: 0.96364
+F1: 0.96360
