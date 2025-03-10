@@ -8,14 +8,14 @@ class lgbm_model():
 
     def __init__(self, seed=0):
         if(seed==0):
-            self.lgbm = LGBMClassifier(min_data_in_leaf= 5, verbose=-1, class_weight='balanced')
+            self.model = LGBMClassifier(min_data_in_leaf= 5, verbose=-1, class_weight='balanced')
         else:
-            self.lgbm = LGBMClassifier(random_state=seed, min_data_in_leaf= 5, verbose=-1, class_weight='balanced')
+            self.model = LGBMClassifier(random_state=seed, min_data_in_leaf= 5, verbose=-1, class_weight='balanced')
 
     #initialize GridSearchCV with given param grid
     def initCV(self, params):
         self.grid_search = GridSearchCV(
-            estimator=self.lgbm,
+            estimator=self.model,
             param_grid=params,
             cv=5,
             scoring='accuracy'
@@ -37,11 +37,11 @@ class lgbm_model():
         print("Test set accuracy of the best model: ", test_score)
 
     def train(self, X_train, y_train):
-        self.lgbm.fit(X_train, y_train)
+        self.model.fit(X_train, y_train)
     
     def predict(self, X_test, y_test):
-        pred = self.lgbm.predict(X_test)
-        prob = self.lgbm.predict_proba(X_test)
+        pred = self.model.predict(X_test)
+        prob = self.model.predict_proba(X_test)
         return evaluate_model(y_test, pred, prob)
 
     def getParams(self):
