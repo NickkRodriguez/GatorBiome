@@ -15,7 +15,7 @@ class lgbm_model():
     #initialize GridSearchCV with given param grid
     def initCV(self, params):
         self.grid_search = GridSearchCV(
-            estimator=self.model,
+            estimator=LGBMClassifier(),
             param_grid=params,
             cv=5,
             scoring='accuracy'
