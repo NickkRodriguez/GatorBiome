@@ -4,7 +4,8 @@ def evaluate_model(y_true, y_pred, y_prob=None):
     metrics = []
     
     metrics.append(accuracy_score(y_true, y_pred))
-    metrics.append(precision_score(y_true, y_pred, average="weighted"))
+    #metrics.append(precision_score(y_true, y_pred, average="weighted"))
+    metrics.append(precision_score(y_true, y_pred, average="weighted", zero_division=0)) # struggling with undefined values
     metrics.append(recall_score(y_true, y_pred, average="weighted"))
     metrics.append(f1_score(y_true, y_pred, average="weighted"))
     
