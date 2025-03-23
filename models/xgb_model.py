@@ -1,6 +1,8 @@
 from xgboost import XGBClassifier
 from utils.evaluate import evaluate_model
+from sklearn.model_selection import GridSearchCV
 
+#Not sure yet if this one works since it's different packages, but if lgbm does this one should too
 class xgb_model():
     def __init__(self, seed=42):
         self.model = XGBClassifier(eval_metric="logloss", random_state=seed)
@@ -12,3 +14,33 @@ class xgb_model():
         pred = self.model.predict(X_test)
         prob = self.model.predict_proba(X_test)
         return evaluate_model(y_test, pred, prob)
+
+    def getParams(self):
+        params ={
+            "n_estimators" : [10,50,100,125,150],
+            "max_depth":[None, 3,5,10,15,20,25],
+            "max_leaves":[0,50,100,200,500,1000],
+            "learning_rate": [0.0001, 0.001, 0.01, 0.1],
+            "grow_policy": ['depthwise', 'lossguide']
+        }
+        return params
+    
+    def initCV(self, params):
+        self.grid_search = GridSearchCV(
+            estimator=XGBClassifier(),
+            param_grid=params,
+            cv=5,
+            scoring='accuracy'
+        )
+    
+    def CVTune(self, X_train, y_train, X_test, y_test):
+        self.grid_search.fit(X_train, y_train)
+    
+    def CVResults(self):
+        print("Best parameters found: ", self.grid_search.best_params_)
+        print("Best score found: ", self.grid_search.best_score_)
+
+    def CVPredict(self, X_test, y_test):
+        best_model = self.grid_search.best_estimator_
+        test_score = best_model.score(X_test, y_test)
+        print("Test set accuracy of the best model: ", test_score)
