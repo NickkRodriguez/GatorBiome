@@ -1,5 +1,5 @@
 Best Model: Non-linear SVM
-AUC: 0.99801
+AUC: 0.99796
 Accuracy: 0.96364
 Precision: 0.96602
 Recall: 0.96364
