@@ -1,0 +1,22 @@
+{
+  "rarefied": {
+    "best_model": "Linear Discriminant Analysis",
+    "metrics": {
+      "auc": 0.99982,
+      "accuracy": 0.98611,
+      "precision": 0.98725,
+      "recall": 0.98611,
+      "f1": 0.98612
+    }
+  },
+  "clr": {
+    "best_model": "Linear Discriminant Analysis",
+    "metrics": {
+      "auc": 0.99982,
+      "accuracy": 0.98611,
+      "precision": 0.98725,
+      "recall": 0.98611,
+      "f1": 0.98612
+    }
+  }
+}

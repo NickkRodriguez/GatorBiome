@@ -1,0 +1,6 @@
+Best Model: Linear Discriminant Analysis
+AUC: 0.99982
+Accuracy: 0.98611
+Precision: 0.98725
+Recall: 0.98611
+F1: 0.98612
