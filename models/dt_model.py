@@ -15,7 +15,7 @@ class dt_model():
     
     def predict(self, X_test, y_test):
         pred = self.model.predict(X_test)
-        prob = self.model.predict_proba(X_test)
+        prob = self.model.predict_proba(X_test)[:, 1]
         return evaluate_model(y_test, pred, prob)
     
     def getParams(self):

@@ -1,22 +1,22 @@
 {
   "rarefied": {
-    "best_model": "Linear Discriminant Analysis",
+    "best_model": "Light Gradient Boosting Model",
     "metrics": {
-      "auc": 0.99982,
-      "accuracy": 0.98611,
-      "precision": 0.98725,
-      "recall": 0.98611,
-      "f1": 0.98612
+      "auc": 0.78108,
+      "accuracy": 0.7098,
+      "precision": 0.7172,
+      "recall": 0.7098,
+      "f1": 0.7061
     }
   },
   "clr": {
-    "best_model": "Linear Discriminant Analysis",
+    "best_model": "Gradient Boosting",
     "metrics": {
-      "auc": 0.99982,
-      "accuracy": 0.98611,
-      "precision": 0.98725,
-      "recall": 0.98611,
-      "f1": 0.98612
+      "auc": 0.77415,
+      "accuracy": 0.71176,
+      "precision": 0.71714,
+      "recall": 0.71176,
+      "f1": 0.70926
     }
   }
 }

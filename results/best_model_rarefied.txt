@@ -1,6 +1,6 @@
-Best Model: Linear Discriminant Analysis
-AUC: 0.99982
-Accuracy: 0.98611
-Precision: 0.98725
-Recall: 0.98611
-F1: 0.98612
+Best Model: Light Gradient Boosting Model
+AUC: 0.78108
+Accuracy: 0.70980
+Precision: 0.71720
+Recall: 0.70980
+F1: 0.70610

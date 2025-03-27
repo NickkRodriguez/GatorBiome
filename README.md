@@ -4,19 +4,23 @@
 The team aims to develop a **machine learning algorithm** that maps human gut microbiome data to disease states. The ultimate goal is to use this algorithm to **predict diseases** based on microbiome readings.
 
 ## Team Responsibilities
-- **Nick Rodriguez** – Team lead: Oversees progress, sets timelines, ensures adherence to objectives, and contributes to ML algorithms and training.
-- **Connor McLoon** – Works on ML algorithms and training; assists with data cleaning.
-- **Lachyn Almazova** – Focuses on frontend development and ML integration.
-- **David Alvarez** – Works on ML algorithms and training.
 
-## Docs
+- **Nick Rodriguez** – Team Lead: Leads ML pipeline design and implementation, oversees system architecture, and drives project direction and deliverables.
+- **Connor McLoon** – Focuses on model training, hyperparameter tuning, and optimization strategy.
+- **Lachyn Almazova** – Frontend Lead: Implements Vue.js dashboard and connects visual outputs.
+- **David Alvarez** – Backend Lead: Develops Django REST API and prepares dashboard endpoints.
+- **Advisor** – Fatemeh Tavassoli: Provides project guidance and microbiome dataset methodology.
+
+## 📁 Docs
 
 ### Project Structure
-- `training_pipeline.ipynb` – Model training.
-- `feature_engineering.ipynb` – Feature selection & evaluation.
-- Model classes are in `models/`, and utility functions are in `utils/`.
-- Datasets (currently a placeholder) are in `data/`.
-- The best-performing model from training is stored in `data/best_model.txt`.
+
+- `training_pipeline.ipynb` – Trains 17 models on both CLR and rarefied datasets; selects the best based on AUC and other metrics.
+- `feature_engineering.ipynb` – Compares six feature selection/extraction methods against the baseline model.
+- `models/` – Contains model wrapper classes (with custom `.train()` and `.predict()` logic).
+- `utils/` – Contains evaluation functions and shared utilities.
+- `data/` – Place CLR and rarefied `.csv` files here (excluded from repo).
+- `results/` – Auto-generated JSON and text outputs for model performance (used by frontend).
 
 ### Archival
 - `main.ipynb` has been archived in `archive/` for reference.
@@ -63,3 +67,9 @@ The team aims to develop a **machine learning algorithm** that maps human gut mi
    echo "export PYTHONNOUSERSITE=True" >> ~/.zshrc
 
 2. Then reload your shell configuration.
+
+
+## ⚠️ Dataset Access:
+- Due to data sharing restrictions, the microbiome datasets used in this project are **not included** in this repository.
+- To run the training and feature engineering pipelines, place the appropriate `.csv` files inside the `data/` folder as specified in the documentation.
+- If you're part of the **course staff** and need access to the datasets, please contact me (Nick Rodriguez) through my university email (visible to instructors on file).

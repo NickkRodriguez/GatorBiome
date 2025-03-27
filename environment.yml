@@ -4,6 +4,7 @@ channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/r
 dependencies:
+  - tqdm
   - lightgbm
   - _py-xgboost-mutex=2.0=cpu_0
   - anyio=4.6.2=py312hecd8cb5_0
