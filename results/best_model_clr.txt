@@ -1,6 +1,0 @@
-Best Model: Gradient Boosting
-AUC: 0.77415
-Accuracy: 0.71176
-Precision: 0.71714
-Recall: 0.71176
-F1: 0.70926

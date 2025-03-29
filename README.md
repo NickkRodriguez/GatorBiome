@@ -20,7 +20,9 @@ The team aims to develop a **machine learning algorithm** that maps human gut mi
 - `models/` – Contains model wrapper classes (with custom `.train()` and `.predict()` logic).
 - `utils/` – Contains evaluation functions and shared utilities.
 - `data/` – Place CLR and rarefied `.csv` files here (excluded from repo).
-- `results/` – Auto-generated JSON and text outputs for model performance (used by frontend).
+- `results/` – Auto-generated outputs for model metrics and frontend visuals.
+  - `results/summaries/` – JSON + CSV outputs used by backend/frontend.
+  - `results/visuals/` – All PNG charts per dataset (`clr/` and `rarefied/`).
 
 ### Archival
 - `main.ipynb` has been archived in `archive/` for reference.

@@ -1,6 +1,0 @@
-Best Model: Light Gradient Boosting Model
-AUC: 0.78108
-Accuracy: 0.70980
-Precision: 0.71720
-Recall: 0.70980
-F1: 0.70610
