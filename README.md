@@ -15,14 +15,15 @@ The team aims to develop a **machine learning algorithm** that maps human gut mi
 
 ### Project Structure
 
-- `training_pipeline.ipynb` – Trains 17 models on both CLR and rarefied datasets; selects the best based on AUC and other metrics.
-- `feature_engineering.ipynb` – Compares six feature selection/extraction methods against the baseline model.
-- `models/` – Contains model wrapper classes (with custom `.train()` and `.predict()` logic).
-- `utils/` – Contains evaluation functions and shared utilities.
-- `data/` – Place CLR and rarefied `.csv` files here (excluded from repo).
-- `results/` – Auto-generated outputs for model metrics and frontend visuals.
-  - `results/summaries/` – JSON + CSV outputs used by backend/frontend.
-  - `results/visuals/` – All PNG charts per dataset (`clr/` and `rarefied/`).
+- `training_pipeline.ipynb` – Trains all models on both CLR and rarefied datasets using 100 stratified train/test splits. Automatically selects the best model based on average AUC (with accuracy, precision, recall, and F1 as tiebreakers).
+- `feature_engineering.ipynb` – Compares six feature engineering methods (3 selection, 3 extraction) across multiple feature counts using 100 randomized runs. Evaluates each method against the baseline (all features). Includes ROC curves, metric heatmaps, and performance trend plots. Supports pickle-based caching to reuse or overwrite previous results as needed.
+- `models/` – Contains model wrapper classes (`.train()` and `.predict()` methods) for sklearn-compatible use in both pipelines.
+- `utils/` – Evaluation metrics, selection/extraction utilities, and shared tools for ROC, CSV exports, and visualizations.
+- `data/` – Place CLR and rarefied `.csv` files here (excluded from version control).
+- `results/` – Stores all outputs from training and feature engineering.
+  - `results/summaries/` – CSV and JSON files (e.g., `best_models.json`) for backend/frontend integration.
+  - `results/visuals/` – Auto-generated PNG plots (line charts, heatmaps, ROC curves), organized by dataset (`clr/`, `rarefied/`).
+  - `results/pickles/` – Pickle files storing complete outputs from the feature engineering pipeline for reproducibility and efficient testing.
 
 ### Archival
 - `main.ipynb` has been archived in `archive/` for reference.
