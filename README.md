@@ -76,3 +76,61 @@ The team aims to develop a **machine learning algorithm** that maps human gut mi
 - Due to data sharing restrictions, the microbiome datasets used in this project are **not included** in this repository.
 - To run the training and feature engineering pipelines, place the appropriate `.csv` files inside the `data/` folder as specified in the documentation.
 - If you're part of the **course staff** and need access to the datasets, please contact me (Nick Rodriguez) through my university email (visible to instructors on file).
+
+# Backend
+
+## Architecture Overview
+The GatorBiome backend is built with Django and Django REST Framework, providing a robust API to serve machine learning models, datasets, and prediction results to the frontend dashboard.
+
+## Technologies
+- **Django**: Web framework for the backend application
+- **Django REST Framework**: Toolkit for building Web APIs
+- **SQLite**: Database for development (configurable for production)
+
+## Database Models
+The backend uses the following key models:
+- **Dataset**: Serves as foreign key to distinguish ModelMetrics
+- **MLModel**: Serves as foreign key to distinguish ModelMetrics
+- **ModelMetrics**: Records performance metrics (AUC, accuracy, precision, recall, F1) for each model-dataset combination
+- **Wine**: Sample dataset for development and testing
+
+## API Endpoints
+The backend exposes the following REST API endpoints:
+
+| Endpoint | Method | Description                                                   |
+|----------|--------|---------------------------------------------------------------|
+| `/api/datasets/` | GET    | List all available datasets                                   |
+| `/api/datasets/` | POST   | Add a new dataset                                             |
+| `/api/models/` | GET    | List all trained ML models                                    |
+| `/api/models/` | POST   | Add an ML model                                               |
+| `/api/model-metrics/` | GET    | Get metrics for models, filterable by model name and dataset name |
+| `/api/model-metrics/` | POST   | Add metrics for a model-dataset combination                   |
+
+## Backend Setup Instructions
+
+1. **Navigate to the backend directory**:
+   ```bash
+   cd backend
+   
+2. Create a virtual environment:
+    ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+3. Install dependencies:
+    ```bash
+   pip install -r requirements.txt
+
+4. Apply Migrations:
+    ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+
+5. Run the development server:
+    ```bash
+   python manage.py runserver
+
+  The API will be available at http://127.0.0.1:8000/
+
+6. Stopping the server:
+Press Ctrl+C in the terminal to stop the server
