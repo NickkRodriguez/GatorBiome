@@ -1,19 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePage.vue'
-import UploadView from '../views/UploadView.vue'
-import ResultsView from '../views/ResultsView.vue'
 import Dashboard from '../views/Dashboard.vue'
+import AboutPage from '../views/About.vue'
+import VisualizationsPage from '../views/Visualizations.vue'
+import ModelsPage from '../views/Models.vue'
+import DatasetsPage from '../views/Datasets.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomePage },
-  { path: '/upload', name: 'upload', component: UploadView },
-  {
-    path: '/results',
-    name: 'results',
-    component: ResultsView,
-    props: route => ({ resultData: route.params.data })
-  },
-  { path: '/dashboard', name: 'dashboard', component: Dashboard }
+  { path: '/dashboard', name: 'dashboard', component: Dashboard },
+  { path: '/about', name: 'about', component: AboutPage },
+  { path: '/visualizations', name: 'visualizations', component: VisualizationsPage },
+  { path: '/models', name: 'models', component: ModelsPage },
+  { path: '/datasets', name: 'datasets', component: DatasetsPage }
 ]
 
 const router = createRouter({
