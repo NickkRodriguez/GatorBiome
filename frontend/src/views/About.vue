@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <v-row justify="center" class="mb-10">
       <v-col cols="12" md="10">
-        <h1 class="text-h4 font-weight-bold text-center text-primary mb-2">About GatorBiome</h1>
+        <h1 class="text-h4 font-weight-bold text-center text-primary mb-2">About Gator Biome</h1>
         <p class="text-center text-grey-darken-1">
           Built by UF students, GatorBiome is a modular ML platform to predict disease from microbiome data using 100-run evaluations and state-of-the-art feature engineering.
         </p>
@@ -22,8 +22,7 @@
               </h2>
               <p class="text-body-1">
                 GatorBiome is a modular machine learning pipeline built to predict diseases, such as colon cancer, using gut microbiome data.
-                Initially focused on Autism Spectrum Disorder (ASD), the project pivoted to broader disease prediction due to public dataset limitations.
-                Now with the new datasets, the system supports flexible feature engineering and rich visualization capabilities.
+                The system supports flexible feature engineering and rich visualization capabilities utilizing the datasets.
               </p>
             </v-col>
           </v-row>
@@ -31,36 +30,47 @@
       </v-col>
     </v-row>
 
-    <!-- Pipeline Highlights -->
+    <!-- Expandable Pipeline Highlights -->
     <v-row justify="center" class="mb-12">
       <v-col cols="12" md="10">
         <v-card elevation="3" class="pa-6 card-highlight">
-          <v-card-title class="text-h6 font-weight-bold mb-4">
-            <v-icon class="me-2" color="primary">mdi-star-circle-outline</v-icon>
-            Pipeline Highlights
+          <v-card-title class="text-h6 font-weight-bold mb-4 d-flex align-center justify-space-between">
+            <div>
+              <v-icon class="me-2" color="primary">mdi-star-circle-outline</v-icon>
+              Pipeline Highlights
+            </div>
+            <v-btn variant="text" @click="toggleHighlights" class="text-primary">
+              {{ showHighlights ? 'Hide' : 'Show' }}
+            </v-btn>
           </v-card-title>
-          <v-row dense>
-            <v-col
-              cols="12"
-              sm="6"
-              v-for="item in animatedHighlights"
-              :key="item.title"
-            >
-              <v-card
-                flat
-                class="pa-4 mb-4 rounded border fade-in card-highlight"
-                elevation="1"
-              >
-                <v-card-title class="text-primary font-weight-medium text-subtitle-1">
-                  <v-icon class="me-2" color="primary">mdi-check-circle</v-icon>
-                  {{ item.title }}
-                </v-card-title>
-                <v-card-text class="text-body-2">
-                  {{ item.description }}
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
+
+          <v-expand-transition>
+            <div v-if="showHighlights">
+              <v-row dense>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  v-for="(item, index) in animatedHighlights"
+                  :key="item.title"
+                >
+                  <v-card
+                    flat
+                    class="pa-4 mb-4 rounded border fade-in card-highlight"
+                    elevation="1"
+                    :style="{ animationDelay: `${index * 500}ms` }"
+                  >
+                    <v-card-title class="text-primary font-weight-medium text-subtitle-1">
+                      <v-icon class="me-2" color="primary">mdi-check-circle</v-icon>
+                      {{ item.title }}
+                    </v-card-title>
+                    <v-card-text class="text-body-2">
+                      {{ item.description }}
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </div>
+          </v-expand-transition>
         </v-card>
       </v-col>
     </v-row>
@@ -102,6 +112,7 @@ export default {
   name: "AboutPage",
   data() {
     return {
+      showHighlights: false,
       animatedHighlights: [],
       highlights: [
         {
@@ -158,16 +169,17 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.animateHighlights();
-  },
   methods: {
+    toggleHighlights() {
+      this.showHighlights = !this.showHighlights;
+      if (this.showHighlights) this.animateHighlights();
+    },
     animateHighlights() {
       this.animatedHighlights = [];
       this.highlights.forEach((item, i) => {
         setTimeout(() => {
           this.animatedHighlights.push(item);
-        }, i * 600);
+        }, i * 150);
       });
     },
   },
@@ -176,7 +188,7 @@ export default {
 
 <style scoped>
 .fade-in {
-  animation: fadeInUp 0.6s ease both;
+  animation: fadeInUp 0.4s ease both;
 }
 @keyframes fadeInUp {
   from {
@@ -188,8 +200,6 @@ export default {
     transform: translateY(0);
   }
 }
-
-/* Hover effect across all cards */
 .card-highlight {
   transition: all 0.3s ease;
   border: 1px solid transparent;

@@ -33,7 +33,7 @@
       </v-col>
     </v-row>
 
-    <!-- Feature Engineering Stats Section -->
+    <!-- Feature Engineering Stats -->
     <v-row justify="center" class="mt-8 mb-12">
       <v-col cols="12" md="10">
         <h2 class="text-h5 font-weight-bold mb-6 text-center">Feature Engineering Highlights</h2>
@@ -50,7 +50,7 @@
               rounded
               class="pa-6 stat-card"
               :color="$vuetify.theme.dark ? '#1e1e1e' : 'blue-lighten-5'"
-              @click="stat.revealed = true"
+              @click="revealStat(index)"
               style="cursor: pointer;"
             >
               <v-icon size="36" color="primary">{{ stat.icon }}</v-icon>
@@ -58,11 +58,7 @@
               <h2 class="text-h4 font-weight-bold mt-1" :class="$vuetify.theme.dark ? 'text-white' : ''">
                 <template v-if="stat.revealed">
                   <template v-if="stat.animate">
-                    <StatCounter
-                      :endValue="stat.value"
-                      :decimalPlaces="stat.decimals"
-                      :startOnMount="true"
-                    />
+                    <span>{{ animatedValues[index].toFixed(stat.decimals) }}</span>
                   </template>
                   <template v-else>
                     {{ stat.value }}
@@ -115,13 +111,8 @@
 </template>
 
 <script>
-import StatCounter from "@/components/StatCounter.vue";
-
 export default {
   name: "HomePage",
-  components: {
-    StatCounter,
-  },
   data() {
     return {
       cards: [
@@ -140,7 +131,7 @@ export default {
           link: "/models",
         },
         {
-          title: "Compare Feature Engineering",
+          title: "Discover Feature Engineering",
           desc: "Selection vs. extraction methods.",
           icon: "mdi-chart-bar",
           details: "Analyze PCA, UMAP, Chi² and others side-by-side.",
@@ -183,6 +174,7 @@ export default {
           caption: "Outperformed extraction methods",
         },
       ],
+      animatedValues: [0, 0],
       reasons: [
         {
           icon: "mdi-magnify",
@@ -207,21 +199,40 @@ export default {
       ],
     };
   },
+  methods: {
+    revealStat(index) {
+      const stat = this.stats[index];
+      if (!stat.revealed) {
+        stat.revealed = true;
+        if (stat.animate) {
+          const start = 0;
+          const end = stat.value;
+          const duration = 1000;
+          const startTime = performance.now();
+
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            this.animatedValues[index] = start + (end - start) * progress;
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          requestAnimationFrame(animate);
+        }
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
-h1 {
-  color: #1e88e5;
-}
-
 .why-card:hover,
 .stat-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 14px rgba(30, 136, 229, 0.25);
   transition: all 0.3s ease;
 }
-
 .flip-card {
   perspective: 1000px;
 }

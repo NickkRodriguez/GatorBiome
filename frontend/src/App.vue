@@ -6,7 +6,7 @@
       <v-spacer></v-spacer>
       <v-btn to="/" text>Home</v-btn>
       <v-btn to="/visualizations" text>Visualizations</v-btn>
-      <v-btn to="/datasets" text>Datasets</v-btn>
+      <!-- <v-btn to="/datasets" text>Datasets</v-btn> -->
       <v-btn to="/models" text>Model Comparison</v-btn>
       <v-btn to="/about" text>About</v-btn>
       <!-- Dashboard hidden for now -->
