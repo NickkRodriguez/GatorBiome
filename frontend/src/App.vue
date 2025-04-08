@@ -9,7 +9,8 @@
       <v-btn to="/datasets" text>Datasets</v-btn>
       <v-btn to="/models" text>Model Comparison</v-btn>
       <v-btn to="/about" text>About</v-btn>
-      <v-btn to="/dashboard" text>Dashboard</v-btn>
+      <!-- Dashboard hidden for now -->
+      <!-- <v-btn to="/dashboard" text>Dashboard</v-btn> -->
 
       <v-switch
         v-model="darkMode"

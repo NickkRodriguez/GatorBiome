@@ -3,8 +3,8 @@
     <!-- Hero Section -->
     <v-row justify="center" class="mb-6">
       <v-col cols="12" md="10" class="text-center">
-        <h1 class="text-h3 font-weight-bold mb-4">Welcome to Gator Biome</h1>
-        <p class="text-subtitle-1 text-grey-darken-2">
+        <h1 class="text-h3 font-weight-bold mb-4 text-primary">Welcome to Gator Biome</h1>
+        <p :class="$vuetify.theme.dark ? 'text-grey-lighten-1' : 'text-grey-darken-2'" class="text-subtitle-1">
           Built by UF students, GatorBiome is a modular ML platform to predict disease from microbiome data using 100-run evaluations and state-of-the-art feature engineering.
         </p>
       </v-col>
@@ -15,16 +15,17 @@
       <v-col cols="12" md="10">
         <h2 class="text-h5 font-weight-bold mb-4 text-center">Why This Matters</h2>
         <v-row dense>
-          <v-col cols="12" sm="6" md="6" v-for="(point, i) in reasons" :key="i">
+          <v-col cols="12" sm="6" v-for="(point, i) in reasons" :key="i">
             <v-sheet
-              class="pa-4 d-flex align-center elevation-2 why-card"
-              color="blue-lighten-5"
+              class="pa-4 d-flex align-center why-card"
+              :color="$vuetify.theme.dark ? '#1e1e1e' : 'blue-lighten-5'"
+              elevation="4"
               rounded
             >
               <v-icon size="36" color="primary" class="mr-4">{{ point.icon }}</v-icon>
               <div>
-                <div class="font-weight-bold mb-1">{{ point.title }}</div>
-                <div class="text-body-2">{{ point.text }}</div>
+                <div class="font-weight-bold mb-1" :class="$vuetify.theme.dark ? 'text-white' : ''">{{ point.title }}</div>
+                <div class="text-body-2" :class="$vuetify.theme.dark ? 'text-grey-lighten-1' : ''">{{ point.text }}</div>
               </div>
             </v-sheet>
           </v-col>
@@ -47,14 +48,14 @@
             <v-sheet
               elevation="4"
               rounded
-              class="pa-6"
-              color="blue-lighten-5"
+              class="pa-6 stat-card"
+              :color="$vuetify.theme.dark ? '#1e1e1e' : 'blue-lighten-5'"
               @click="stat.revealed = true"
               style="cursor: pointer;"
             >
               <v-icon size="36" color="primary">{{ stat.icon }}</v-icon>
-              <h3 class="text-h6 font-weight-medium mt-2">{{ stat.title }}</h3>
-              <h2 class="text-h4 font-weight-bold mt-1">
+              <h3 class="text-h6 font-weight-medium mt-2" :class="$vuetify.theme.dark ? 'text-white' : ''">{{ stat.title }}</h3>
+              <h2 class="text-h4 font-weight-bold mt-1" :class="$vuetify.theme.dark ? 'text-white' : ''">
                 <template v-if="stat.revealed">
                   <template v-if="stat.animate">
                     <StatCounter
@@ -71,7 +72,7 @@
                   <span class="text-subtitle-1 font-italic font-weight-bold">Click to Discover Results</span>
                 </template>
               </h2>
-              <p class="text-caption">{{ stat.caption }}</p>
+              <p class="text-caption" :class="$vuetify.theme.dark ? 'text-grey-lighten-1' : ''">{{ stat.caption }}</p>
             </v-sheet>
           </v-col>
         </v-row>
@@ -85,15 +86,23 @@
           <div class="flip-card" v-bind="props">
             <div class="flip-card-inner" :class="{ flipped: isHovering }">
               <div class="flip-card-front">
-                <v-card class="pa-4 text-center" elevation="4">
+                <v-card
+                  class="pa-4 text-center flip-card-style"
+                  elevation="4"
+                  :color="$vuetify.theme.dark ? '#1e1e1e' : 'white'"
+                >
                   <v-icon size="48" color="primary">{{ card.icon }}</v-icon>
-                  <h3 class="text-h6 font-weight-medium mt-3 mb-2">{{ card.title }}</h3>
-                  <p class="text-body-2">{{ card.desc }}</p>
+                  <h3 class="text-h6 font-weight-medium mt-3 mb-2" :class="$vuetify.theme.dark ? 'text-white' : ''">{{ card.title }}</h3>
+                  <p class="text-body-2" :class="$vuetify.theme.dark ? 'text-grey-lighten-1' : ''">{{ card.desc }}</p>
                 </v-card>
               </div>
               <div class="flip-card-back">
-                <v-card class="pa-4 text-center d-flex flex-column justify-center" elevation="4">
-                  <p class="text-body-1 mb-4">{{ card.details }}</p>
+                <v-card
+                  class="pa-4 text-center d-flex flex-column justify-center flip-card-style"
+                  elevation="4"
+                  :color="$vuetify.theme.dark ? '#1e1e1e' : 'white'"
+                >
+                  <p class="text-body-1 mb-4" :class="$vuetify.theme.dark ? 'text-grey-lighten-1' : ''">{{ card.details }}</p>
                   <v-btn color="primary" :to="card.link">Explore</v-btn>
                 </v-card>
               </div>
@@ -206,16 +215,11 @@ h1 {
   color: #1e88e5;
 }
 
-.text-grey-darken-2 {
-  color: #616161 !important;
-}
-
-.why-card {
-  transition: 0.3s ease;
-}
-.why-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 20px rgba(30, 136, 229, 0.15);
+.why-card:hover,
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 14px rgba(30, 136, 229, 0.25);
+  transition: all 0.3s ease;
 }
 
 .flip-card {
@@ -240,5 +244,8 @@ h1 {
 }
 .flip-card-back {
   transform: rotateY(180deg);
+}
+.flip-card-style {
+  transition: all 0.3s ease;
 }
 </style>
