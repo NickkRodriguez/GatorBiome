@@ -20,9 +20,10 @@ import { Bar } from 'vue-chartjs';
 import { reactive, onMounted } from 'vue';
 import { defineComponent } from 'vue';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
-
+import API from "@/api";
 // Register the necessary components with Chart.js
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+
 
 export default defineComponent({
   name: "DashboardPage",
@@ -54,21 +55,30 @@ export default defineComponent({
     });
 
     // Fetch feature engineering data from the backend
-    onMounted(async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/feature-engineering/?dataset_name=rarefied');
-        const data = await response.json();
+onMounted(() => {
+  console.log("Component mounted - about to make API request");
 
-        // Log the data to the console to check the structure
-        console.log(data);
-
-        // Assuming the data contains `# Features` and `AUC`
-        chartData.labels = data.map(row => row['# Features']);
-        chartData.datasets[0].data = data.map(row => row['AUC']);
-      } catch (error) {
-        console.error("Error fetching feature engineering data:", error);
+  // Wrap in setTimeout to ensure it runs after mounting
+  setTimeout(async () => {
+    try {
+      console.log("Making API request to feature-engineering endpoint"); // was previously using native fetch function as opposed to api.get
+      const response = await API.get('feature-engineering/', {
+        params: { dataset_name: 'rarefied' }
+      });
+      console.log("API response received:", response);
+    } catch (error) {
+      console.error("Error making API request:", error);
+      if (error.response) {
+        console.error("Error response:", error.response.data);
+        console.error("Error status:", error.response.status);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error message:", error.message);
       }
-    });
+    }
+  }, 100);
+});
 
     return { chartData, chartOptions };
   }
