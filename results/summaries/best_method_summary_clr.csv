@@ -1,0 +1,2 @@
+dataset,model,method,n_features,method_type,AUC,Accuracy,Precision,Recall,F1,method_id
+clr,Logistic Regression - Elastic Net,ANOVA F-value,50,Selection,0.781723076923077,0.7019607843137254,0.7124484004127968,0.7019607843137254,0.6970557501997664,clr_Logistic Regression - Elastic Net_ANOVA F-value_50
