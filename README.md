@@ -5,25 +5,34 @@ The team aims to develop a **machine learning algorithm** that maps human gut mi
 
 ## Team Responsibilities
 
-- **Nick Rodriguez** – Team Lead: Leads ML pipeline design and implementation, oversees system architecture, and drives project direction and deliverables.
-- **Connor McLoon** – Focuses on model training, hyperparameter tuning, and optimization strategy.
+- **Nick Rodriguez** – Team Lead: Leads the design and implementation of the training pipeline, feature engineering, and ensemble modeling. Developed the majority of model classes and oversees system architecture, visualizations, and project direction.
+- **Connor McLoon** – Designed the initial training pipeline structure and implemented the hyperparameter tuning logic across all supported models.
 - **Lachyn Almazova** – Frontend Lead: Implements Vue.js dashboard and connects visual outputs.
 - **David Alvarez** – Backend Lead: Develops Django REST API and prepares dashboard endpoints.
-- **Advisor** – Fatemeh Tavassoli: Provides project guidance and microbiome dataset methodology.
+- **Advisor** – Fatemeh Tavassoli, PhD: Provides project guidance and microbiome dataset methodology.
 
 ## 📁 Docs
 
 ### Project Structure
 
-- `training_pipeline.ipynb` – Trains all models on both CLR and rarefied datasets using 100 stratified train/test splits. Automatically selects the best model based on average AUC (with accuracy, precision, recall, and F1 as tiebreakers).
-- `feature_engineering.ipynb` – Compares six feature engineering methods (3 selection, 3 extraction) across multiple feature counts using 100 randomized runs. Evaluates each method against the baseline (all features). Includes ROC curves, metric heatmaps, and performance trend plots. Supports pickle-based caching to reuse or overwrite previous results as needed.
-- `models/` – Contains model wrapper classes (`.train()` and `.predict()` methods) for sklearn-compatible use in both pipelines.
+- `training_pipeline.ipynb` – Trains all models on both CLR and rarefied datasets using 100 stratified train/test splits. Stores per-run predictions and metrics. Saves ROC curves, versioned pickles, and model summaries.
+- `feature_engineering.ipynb` – Compares six feature engineering methods (3 selection, 3 extraction) across multiple feature counts using 100 randomized runs. Tracks per-run predictions and identifies the best method using concatenated predictions. Outputs JSON/CSV summaries, ROC plots, and visual comparisons.
+- `ensemble_modeling.ipynb` – Evaluates cross-derivative ensembles (e.g., CLR + rarefied) using soft voting, hard voting, and logistic regression stacking. Aligns predictions by sample ID and saves ensemble ROC curves, performance tables, and JSON summaries.
+- `evaluate.py` – Computes metrics (AUC, accuracy, precision, recall, F1), supports AUC fallback for multiclass cases, and returns predictions for reuse in ROC/ensemble.
+- `models/` – Contains model wrapper classes (`.train()` and `.predict()` methods) for sklearn-compatible use in all pipelines.
 - `utils/` – Evaluation metrics, selection/extraction utilities, and shared tools for ROC, CSV exports, and visualizations.
-- `data/` – Place CLR and rarefied `.csv` files here (excluded from version control).
-- `results/` – Stores all outputs from training and feature engineering.
-  - `results/summaries/` – CSV and JSON files (e.g., `best_models.json`) for backend/frontend integration.
-  - `results/visuals/` – Auto-generated PNG plots (line charts, heatmaps, ROC curves), organized by dataset (`clr/`, `rarefied/`).
-  - `results/pickles/` – Pickle files storing complete outputs from the feature engineering pipeline for reproducibility and efficient testing.
+
+- `data/` – Place CLR and rarefied `.csv` files here (excluded from version control). Placeholder datasets like `wine.csv` have been moved to `archive/`.
+- `archive/` – Stores legacy files (`main.ipynb`, `main.py`, `wine.csv`, etc.) that are no longer in use but retained for reference.
+
+- `results/` – Stores all outputs from training, feature engineering, and ensemble evaluation.
+  - `results/pickles/` – Pickle files storing complete outputs for reproducibility.
+  - `results/summaries/` – JSON and CSV summaries (e.g., `best_models.json`, `ensemble_metrics.json`) for backend/frontend use.
+  - `results/visuals/`
+    - `training/` – ROC curves for training models
+    - `feature/clr/`, `feature/rarefied/` – Heatmaps, trend plots, and ROC curves by feature method
+    - `ensemble/` – ROC comparison of individual models vs ensemble strategies
+
 
 ### Archival
 - `main.ipynb` has been archived in `archive/` for reference.
