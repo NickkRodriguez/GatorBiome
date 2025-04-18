@@ -1,0 +1,15 @@
+[
+    {
+        "dataset": "rarefied",
+        "model": "Light Gradient Boosting Model",
+        "method": "Mutual Information",
+        "n_features": 150,
+        "method_type": "Selection",
+        "AUC": 0.7796068376068377,
+        "Accuracy": 0.7403921568627452,
+        "Precision": 0.7562779894874839,
+        "Recall": 0.7403921568627452,
+        "F1": 0.7340968628992091,
+        "method_id": "rarefied_Light Gradient Boosting Model_Mutual Information_150"
+    }
+]

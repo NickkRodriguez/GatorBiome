@@ -1,0 +1,2 @@
+dataset,model,method,n_features,method_type,AUC,Accuracy,Precision,Recall,F1,method_id
+clr,Logistic Regression - Elastic Net,PCA,70,Extraction,0.7833727445394112,0.7088627450980391,0.7307033557271682,0.7088627450980391,0.7019988717733219,clr_Logistic Regression - Elastic Net_PCA_70
