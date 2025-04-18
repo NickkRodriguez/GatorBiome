@@ -1,14 +1,59 @@
+import pandas as pd
+import os
 from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import viewsets, status
+from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import serializers
 from .models import Wine, ModelMetrics, MLModel, Dataset
 from .serializers import WineSerializer, DatasetSerializer, MLModelSerializer, ModelMetricsSerializer
 
+class FeatureEngineeringResultsView(APIView):
+    def get(self, request):
+        dataset_name = request.query_params.get('dataset_name')
 
+        if dataset_name:
+            # Path to the feature engineering result CSV
+            csv_path = os.path.join(settings.RESULTS_DIR, f'feature_eng_results_{dataset_name}.csv')
+            print(f"CSV Path: {csv_path}")  # Debugging output
+            
+            # Check if the file exists
+            if os.path.exists(csv_path):
+                try:
+                    # Load CSV into DataFrame and convert to JSON
+                    df = pd.read_csv(csv_path)
+                    result_data = df.to_dict(orient='records')
+
+                    # Adding static paths to charts for display
+                    charts_path = os.path.join(settings.RESULTS_DIR, 'visuals', dataset_name)
+                    chart_images = {
+                        "accuracy": os.path.join(charts_path, f"{dataset_name}_heatmap_accuracy.png"),
+                        "auc": os.path.join(charts_path, f"{dataset_name}_heatmap_auc.png"),
+                        "f1": os.path.join(charts_path, f"{dataset_name}_heatmap_f1.png"),
+                        "precision": os.path.join(charts_path, f"{dataset_name}_heatmap_precision.png"),
+                    }
+
+                    return Response({
+                        "data": result_data,
+                        "charts": chart_images  # Adding the paths for chart images
+                    }, status=status.HTTP_200_OK)
+
+                except Exception as e:
+                    return Response(
+                        {"error": f"Error reading the file: {str(e)}"},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                    )
+            else:
+                return Response(
+                    {"error": f"Feature engineering results for dataset '{dataset_name}' not found at {csv_path}"},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+        else:
+            return Response({"error": "Dataset name is required"}, status=status.HTTP_400_BAD_REQUEST)
+        
 class WineViewSet(viewsets.ModelViewSet):
     queryset = Wine.objects.all()
     serializer_class = WineSerializer
