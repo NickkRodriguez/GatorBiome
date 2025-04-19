@@ -81,10 +81,64 @@ The team aims to develop a **machine learning algorithm** that maps human gut mi
 2. Then reload your shell configuration.
 
 
-## ⚠️ Dataset Access:
+## ⚠️ Dataset Access
 - Due to data sharing restrictions, the microbiome datasets used in this project are **not included** in this repository.
 - To run the training and feature engineering pipelines, place the appropriate `.csv` files inside the `data/` folder as specified in the documentation.
 - If you're part of the **course staff** and need access to the datasets, please contact me (Nick Rodriguez) through my university email (visible to instructors on file).
+
+---
+
+## 🧬 Dataset Upload Requirements (For Web App)
+
+To run the GatorBiome app via the local website, you must upload **two `.csv` datasets** that follow the exact format below.
+
+---
+
+### 📂 File & Upload Rules
+
+- Upload exactly **two `.csv` files** using the upload form on the homepage
+- File names can be anything (e.g., `clr.csv`, `set2.csv`, etc.)
+- Files must **not** contain slashes (`/`, `\`) or be hidden files (no leading `.`)
+- Files are saved into the backend's `./data/` folder automatically
+
+---
+
+### 📄 Required Column Format (Strict Order)
+
+Each `.csv` file must contain **all of the following columns**, in this **exact order**:
+
+| Column Name         | Position        | Description                                  |
+|---------------------|------------------|----------------------------------------------|
+| sampleid            | First            | Unique sample ID (not used in modeling)      |
+| ASV Features        | 2nd to N-2       | All numeric microbiome features              |
+| Diagnosis           | Second-to-last   | Human-readable label (e.g., “Normal”, “ASD”) |
+| Diagnosis_labeled   | Last             | Only values of 0 or 1; used as the model target |
+
+Column order must match exactly. The pipeline extracts features using positional slicing (`iloc[:, 1:-2]`).
+
+### ⚠️ Additional Format Rules
+
+- All feature values must be numeric only.
+- Diagnosis_labeled must only contain values of 0 or 1.
+- Missing values (NaN, blanks, or nulls) are not allowed.
+- No extra columns beyond those listed above should be present.
+- No text values are allowed in feature columns.
+- Any preprocessing style is allowed (e.g., rarefied, CLR) as long as all values are numeric.
+
+---
+
+### 🧾 What You’ll See After Upload
+
+Once both datasets are uploaded and the **Run Analysis** button is clicked:
+
+- AUC, Accuracy, F1-score, and other metrics per dataset
+- The best model + feature method for each dataset
+- ROC curve plots
+- Download buttons for `.csv` and `.json` summary results
+- *(and any other available visualizations or insights)*
+
+---
+
 
 # Backend
 
