@@ -2,14 +2,14 @@
     {
         "dataset": "clr",
         "model": "Logistic Regression - Elastic Net",
-        "method": "PCA",
-        "n_features": 70,
-        "method_type": "Extraction",
-        "AUC": 0.7833727445394112,
-        "Accuracy": 0.7088627450980391,
-        "Precision": 0.7307033557271682,
-        "Recall": 0.7088627450980391,
-        "F1": 0.7019988717733219,
-        "method_id": "clr_Logistic Regression - Elastic Net_PCA_70"
+        "method": "Mutual Information",
+        "n_features": 50,
+        "method_type": "Selection",
+        "AUC": 0.81,
+        "Accuracy": 0.715,
+        "Precision": 0.6519444444444444,
+        "Recall": 0.715,
+        "F1": 0.6603333333333333,
+        "method_id": "clr_Logistic Regression - Elastic Net_Mutual Information_50"
     }
 ]

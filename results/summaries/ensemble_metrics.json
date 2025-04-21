@@ -7,21 +7,21 @@
     "best_models": {
         "clr": {
             "model": "Logistic Regression - Elastic Net",
-            "method": "PCA",
-            "features": 70,
-            "auc_json": 0.7833727445394112
+            "method": "Mutual Information",
+            "features": 50,
+            "auc_json": 0.81
         },
         "rarefied": {
             "model": "Light Gradient Boosting Model",
-            "method": "Mutual Information",
+            "method": "ANOVA F-value",
             "features": 150,
-            "auc_json": 0.7796068376068377
+            "auc_json": 0.855
         }
     },
     "ensemble_aucs": {
-        "soft": 0.8063675293241482,
-        "hard": 0.7217464159374418,
-        "stacking": 0.8076708247998511
+        "soft": 0.8148699807608764,
+        "hard": 0.7265561968596784,
+        "stacking": 0.8154905976540682
     },
     "version": "v2"
 }
