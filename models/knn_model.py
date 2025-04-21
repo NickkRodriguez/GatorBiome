@@ -2,6 +2,12 @@ from sklearn.neighbors import KNeighborsClassifier
 from utils.evaluate import evaluate_model
 from sklearn.model_selection import GridSearchCV
 
+import optuna
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import StratifiedKFold
+import numpy as np
+import os
+
 class knn_model():
     def __init__(self, seed=0):
         self.model = KNeighborsClassifier()
@@ -14,33 +20,39 @@ class knn_model():
         prob = self.model.predict_proba(X_test)[:, 1]
         return evaluate_model(y_test, pred, prob)
 
-    def getParams(self):
-        params ={
-            "n_neighbors" : [1,3,5,10,15],
-            "weights" : ['uniform', 'distance'],
-            "algorithm" : ['auto', 'ball_tree', 'kd_tree', 'brute'],
-            "leaf_size" : [10, 30, 50, 75],
-            "p" : [1, 2, 5]
+    def objective(self, trial, X, y):
+        n_neighbors = trial.suggest_int("n_neighbors", 1,25)
+        weights = trial.suggest_categorical("weights", ['uniform', 'distance'])
+        algorithm = trial.suggest_categorical("algorithm", ['auto', 'ball_tree', 'kd_tree', 'brute'])
+        leaf_size = trial.suggest_int("leaf_size", 10,75)
+        p = trial.suggest_int("p", 1,5)
+        knn = KNeighborsClassifier(n_neighbors=n_neighbors,
+                                   weights=weights,
+                                   algorithm=algorithm,
+                                   leaf_size=leaf_size,
+                                   p=p)
 
-        }
-        return params
-    
-    def initCV(self, params):
-        self.grid_search = GridSearchCV(
-            estimator=KNeighborsClassifier(),
-            param_grid=params,
-            cv=5,
-            scoring='accuracy'
-        )
-    
-    def CVTune(self, X_train, y_train, X_test, y_test):
-        self.grid_search.fit(X_train, y_train)
-    
-    def CVResults(self):
-        print("Best parameters found: ", self.grid_search.best_params_)
-        print("Best score found: ", self.grid_search.best_score_)
+        try:
+            score = cross_val_score(knn, X, y, cv=StratifiedKFold(5), scoring="accuracy")
+            return np.mean(score)
+        except Exception as e:
+            print(f"Skipping due to error")
+            raise optuna.exceptions.TrialPruned()
+        
+    def tune_params(self, x, y, trials, model_name, dataset_name):
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        results_dir = os.path.join(base_dir, "../results/tuning/")
+        os.makedirs(results_dir, exist_ok=True)
+        db_path = os.path.join(results_dir, "tuning_results.db")
+        study = optuna.create_study(direction="maximize", study_name= model_name + " " +dataset_name, storage = f"sqlite:///{os.path.abspath(db_path)}")
+        study.optimize(lambda trial: self.objective(trial, x, y), n_trials=trials, timeout=360)
 
-    def CVPredict(self, X_test, y_test):
-        best_model = self.grid_search.best_estimator_
-        test_score = best_model.score(X_test, y_test)
-        print("Test set accuracy of the best model: ", test_score)
+    def reset(self,model_name,dataset_name):
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        results_dir = os.path.join(base_dir, "../results/tuning/")
+        os.makedirs(results_dir, exist_ok=True)
+        db_path = os.path.join(results_dir, "tuning_results.db")
+        try:
+            optuna.delete_study(study_name= model_name + " " +dataset_name, storage = f"sqlite:///{os.path.abspath(db_path)}")
+        except KeyError as e:
+            print("Failed delete, record does not exist")

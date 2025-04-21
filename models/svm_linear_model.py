@@ -2,6 +2,12 @@ from sklearn.svm import SVC
 from utils.evaluate import evaluate_model
 from sklearn.model_selection import GridSearchCV
 
+import optuna
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import StratifiedKFold
+import numpy as np
+import os
+
 
 #Because there are 2 SVC models, only one needs grid search
 class svm_linear_model():
@@ -16,31 +22,37 @@ class svm_linear_model():
         prob = self.model.predict_proba(X_test)[:, 1]
         return evaluate_model(y_test, pred, prob)
 
-    def getParams(self):
-        params ={
-            "kernel": ['linear','poly','rbf','sigmoid','precomputed'],
-            "degree": [1,3,5,10,20],
-            "gamma": ['scale', 'auto'],
-            "probability": [True, False]
-        }
-        return params
-    
-    def initCV(self, params):
-        self.grid_search = GridSearchCV(
-            estimator=SVC(),
-            param_grid=params,
-            cv=5,
-            scoring='accuracy'
-        )
-    
-    def CVTune(self, X_train, y_train, X_test, y_test):
-        self.grid_search.fit(X_train, y_train)
-    
-    def CVResults(self):
-        print("Best parameters found: ", self.grid_search.best_params_)
-        print("Best score found: ", self.grid_search.best_score_)
+    def objective(self, trial, X, y):
+        kernel = trial.suggest_categorical("kernel",['linear','poly','rbf','sigmoid','precomputed'])
+        degree = trial.suggest_int("degree", 1,20)
+        gamma = trial.suggest_categorical("gamma", ['scale', 'auto'])
+        probability = trial.suggest_categorical("probability", [True, False])
+        svc = SVC(kernel=kernel,
+                       degree=degree,
+                       gamma=gamma,
+                       probability=probability)
 
-    def CVPredict(self, X_test, y_test):
-        best_model = self.grid_search.best_estimator_
-        test_score = best_model.score(X_test, y_test)
-        print("Test set accuracy of the best model: ", test_score)
+        try:
+            score = cross_val_score(svc, X, y, cv=StratifiedKFold(5), scoring="accuracy")
+            return np.mean(score)
+        except Exception as e:
+            print(f"Skipping due to error")
+            raise optuna.exceptions.TrialPruned()
+        
+    def tune_params(self, x, y, trials, model_name, dataset_name):
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        results_dir = os.path.join(base_dir, "../results/tuning/")
+        os.makedirs(results_dir, exist_ok=True)
+        db_path = os.path.join(results_dir, "tuning_results.db")
+        study = optuna.create_study(direction="maximize", study_name= model_name + " " +dataset_name, storage = f"sqlite:///{os.path.abspath(db_path)}")
+        study.optimize(lambda trial: self.objective(trial, x, y), n_trials=trials, timeout=360)
+
+    def reset(self,model_name,dataset_name):
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        results_dir = os.path.join(base_dir, "../results/tuning/")
+        os.makedirs(results_dir, exist_ok=True)
+        db_path = os.path.join(results_dir, "tuning_results.db")
+        try:
+            optuna.delete_study(study_name= model_name + " " +dataset_name, storage = f"sqlite:///{os.path.abspath(db_path)}")
+        except KeyError as e:
+            print("Failed delete, record does not exist")
