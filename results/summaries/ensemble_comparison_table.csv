@@ -1,6 +1,6 @@
 Method,AUC,Accuracy,Precision,Recall,F1 Score
-Logistic Regression - Elastic Net (clr),0.7742,0.7087,0.7135,0.7087,0.7056
-Light Gradient Boosting Model (rarefied),0.7781,0.7402,0.7462,0.7402,0.7375
-Soft Voting Ensemble,0.8064,0.752,0.7606,0.752,0.7487
-Hard Voting Ensemble,0.7217,0.7283,0.7694,0.7283,0.715
-Stacking Ensemble,0.8077,0.7362,0.7404,0.7362,0.7341
+Logistic Regression - Elastic Net (clr),0.7725,0.7205,0.7226,0.7205,0.719
+Light Gradient Boosting Model (rarefied),0.8128,0.748,0.751,0.748,0.7465
+Soft Voting Ensemble,0.8149,0.7717,0.7742,0.7717,0.7706
+Hard Voting Ensemble,0.7266,0.7323,0.7614,0.7323,0.7224
+Stacking Ensemble,0.8155,0.7638,0.7655,0.7638,0.7629
