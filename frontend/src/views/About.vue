@@ -21,8 +21,8 @@
                 Project Overview
               </h2>
               <p class="text-body-1">
-                GatorBiome is a modular machine learning pipeline built to predict diseases, such as colon cancer, using gut microbiome data.
-                The system supports flexible feature engineering and rich visualization capabilities utilizing the datasets.
+                GatorBiome is a modular machine learning platform designed to predict diseases, such as colon cancer, by analyzing gut microbiome data.
+The system supports interchangeable datasets and ML models, enabling robust experimentation. It features advanced feature engineering methods (e.g., PCA, UMAP, ANOVA F-value) and offers visualizations like ROC curves and AUC trends. GatorBiome includes ensemble strategies like stacking to boost performance and allows researchers to run predictions on their own data via an interactive web dashboard.
               </p>
             </v-col>
           </v-row>
@@ -172,7 +172,7 @@ export default {
         {
           name: "Nick Rodriguez",
           title: "Team Lead",
-          role: "ML pipeline, system architecture, documentation, and project direction.",
+          role: "ML pipeline, system architecture, and project direction.",
         },
         {
           name: "Connor McLoon",
@@ -182,7 +182,7 @@ export default {
         {
           name: "Lachyn Almazova",
           title: "Frontend Lead",
-          role: "Vue.js dashboard implementation and visualization integration.",
+          role: "Vue.js development, prediction flow, and interactive visualizations.",
         },
         {
           name: "David Alvarez",

@@ -33,6 +33,21 @@
       </v-col>
     </v-row>
 
+    <!-- CTA Section -->
+    <v-row justify="center" class="my-10">
+      <v-col cols="12" md="10" class="text-center">
+        <v-sheet elevation="3" rounded class="pa-8" :color="$vuetify.theme.dark ? '#1e1e1e' : 'blue-lighten-5'">
+          <h2 class="text-h5 font-weight-bold mb-4 text-primary">Ready to test your dataset with our best model?</h2>
+          <p class="text-subtitle-1 mb-4" :class="$vuetify.theme.dark ? 'text-grey-lighten-1' : 'text-grey-darken-2'">
+            Upload your microbiome CSV file and run predictions instantly using our highest-performing model pipeline.
+          </p>
+          <v-btn color="primary" large to="/model-prediction">
+            Try It Now
+          </v-btn>
+        </v-sheet>
+      </v-col>
+    </v-row>
+
     <!-- Feature Engineering Stats -->
     <v-row justify="center" class="mt-8 mb-12">
       <v-col cols="12" md="10">
@@ -149,11 +164,11 @@ export default {
         },
         {
           icon: "mdi-shield-check",
-          title: "Most Robust Method",
-          value: "CLR",
+          title: "Best Ensemble Strategy",
+          value: "Stacking",
           animate: false,
           revealed: false,
-          caption: "CLR models performed more consistently across metrics",
+          caption: "Stacked model reached 0.815 AUC, outperforming all individual models",
         },
         {
           icon: "mdi-format-list-bulleted",
@@ -165,11 +180,11 @@ export default {
         },
         {
           icon: "mdi-trending-up",
-          title: "Performance Boost",
-          value: "+53% AUC Gain",
+          title: "Top AUC Model",
+          value: "LightGBM",
           animate: false,
           revealed: false,
-          caption: "AUC improved from 0.51 to 0.78 through feature engineering",
+          caption: "Rarefied + LightGBM achieved the highest AUC of 0.85",
         },
       ],
       animatedValues: [0, 0],
