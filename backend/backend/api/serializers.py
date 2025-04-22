@@ -1,11 +1,6 @@
 from rest_framework import serializers
-from .models import Wine, Dataset, ModelMetrics, MLModel
+from .models import Dataset, ModelMetrics, MLModel
 
-
-class WineSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Wine
-        fields = '__all__'
 
 class DatasetSerializer(serializers.ModelSerializer):
     class Meta:
