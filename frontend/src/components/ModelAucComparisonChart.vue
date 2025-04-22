@@ -31,14 +31,14 @@ export default {
         labels: ['AUC', 'Accuracy', 'Precision', 'Recall', 'F1'],
         datasets: [
           {
-            label: 'Best CLR Model',
+            label: 'CLR: Logistic Regression',
             backgroundColor: '#1976d2',
             data: [
               0.772, 0.711, 0.715, 0.711, 0.709 // From best_models.json for CLR
             ],
           },
           {
-            label: 'Best Rarefied Model',
+            label: 'Rarefied: LGBM',
             backgroundColor: '#4caf50',
             data: [
               0.785, 0.706, 0.717, 0.706, 0.702 // From best_models.json for Rarefied
