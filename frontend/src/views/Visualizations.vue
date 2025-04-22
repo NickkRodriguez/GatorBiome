@@ -7,8 +7,68 @@
           Model Evaluation Visualizations
         </h1>
         <p class="text-center text-grey-darken-1">
-          These visualizations compare CLR vs Rarefied transformations using heatmaps, ROC curves, and metric trend plots for AUC and F1 scores.
+          These visualizations compare CLR vs Rarefied Preprocessing using heatmaps, ROC curves, and metric trend plots for AUC and F1 scores.
         </p>
+      </v-col>
+    </v-row>
+
+    <!-- Ensemble ROC Visuals -->
+    <v-row justify="center" class="mb-6">
+      <v-col cols="12" md="10">
+        <v-expand-transition>
+          <div>
+            <div class="d-flex justify-space-between align-center mb-4">
+              <h2 class="text-h5 font-weight-bold text-primary">Ensemble ROC Visuals</h2>
+              <v-btn text color="primary" @click="showEnsemble = !showEnsemble">
+                {{ showEnsemble ? 'Hide' : 'Show' }}
+              </v-btn>
+            </div>
+            <v-row dense v-show="showEnsemble">
+              <v-col
+                v-for="(img, i) in ensembleImages"
+                :key="'ensemble-' + i"
+                cols="12"
+                md="6"
+                class="mb-6"
+              >
+                <v-card class="overflow-hidden hover-zoom" elevation="3" @click="openImage(img)">
+                  <v-img :src="img.path" :alt="img.label" height="300px" />
+                  <v-card-title class="font-weight-bold">{{ img.label }}</v-card-title>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
+        </v-expand-transition>
+      </v-col>
+    </v-row>
+
+    <!-- Combined ROC Curve for CLR + Rarefied -->
+    <v-row justify="center" class="mb-6">
+      <v-col cols="12" md="10">
+        <v-expand-transition>
+          <div>
+            <div class="d-flex justify-space-between align-center mb-4">
+              <h2 class="text-h5 font-weight-bold text-primary">ROC Curve – All Models</h2>
+              <v-btn text color="primary" @click="showCombinedRoc = !showCombinedRoc">
+                {{ showCombinedRoc ? 'Hide' : 'Show' }}
+              </v-btn>
+            </div>
+            <v-row dense v-show="showCombinedRoc">
+              <v-col
+                v-for="(img, i) in combinedRocImages"
+                :key="'combined-roc-' + i"
+                cols="12"
+                md="6"
+                class="mb-6"
+              >
+                <v-card class="overflow-hidden hover-zoom" elevation="3" @click="openImage(img)">
+                  <v-img :src="img.path" :alt="img.label" height="300px" />
+                  <v-card-title class="font-weight-bold">{{ img.label }}</v-card-title>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
+        </v-expand-transition>
       </v-col>
     </v-row>
 
@@ -18,7 +78,7 @@
         <v-expand-transition>
           <div>
             <div class="d-flex justify-space-between align-center mb-4">
-              <h2 class="text-h5 font-weight-bold text-primary">CLR Transform</h2>
+              <h2 class="text-h5 font-weight-bold text-primary">CLR Preprocessing</h2>
               <v-btn text color="primary" @click="showClr = !showClr">
                 {{ showClr ? 'Hide' : 'Show' }}
               </v-btn>
@@ -39,12 +99,16 @@
             </v-row>
           </div>
         </v-expand-transition>
+      </v-col>
+    </v-row>
 
-        <!-- Rarefied Section -->
+    <!-- Rarefied Section -->
+    <v-row justify="center" class="mb-6">
+      <v-col cols="12" md="10">
         <v-expand-transition>
-          <div class="mt-12">
+          <div>
             <div class="d-flex justify-space-between align-center mb-4">
-              <h2 class="text-h5 font-weight-bold text-primary">Rarefied Transform</h2>
+              <h2 class="text-h5 font-weight-bold text-primary">Rarefied Preprocessing</h2>
               <v-btn text color="primary" @click="showRarefied = !showRarefied">
                 {{ showRarefied ? 'Hide' : 'Show' }}
               </v-btn>
@@ -92,6 +156,24 @@ export default {
       selectedImage: { label: "", path: "" },
       showClr: true,
       showRarefied: true,
+      showEnsemble: true,
+      showCombinedRoc: true,
+      ensembleImages: [
+        {
+          label: "Ensemble ROC Curve",
+          path: "/visuals/ensemble/ensemble_roc_curves.png",
+        },
+      ],
+      combinedRocImages: [
+        {
+          label: "ROC Curve - All Models (CLR)",
+          path: "/visuals/training/roc_all_models_clr.png",
+        },
+        {
+          label: "ROC Curve - All Models (Rarefied)",
+          path: "/visuals/training/roc_all_models_rarefied.png",
+        },
+      ],
       clrImages: [
         {
           label: "CLR - Heatmap AUC",
