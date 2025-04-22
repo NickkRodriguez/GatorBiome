@@ -1,14 +1,17 @@
 <template>
   <v-container class="py-10">
     <!-- Page Header -->
-    <v-row justify="center" class="mb-10">
-      <v-col cols="12" md="10">
-        <h1 class="text-h4 font-weight-bold text-center text-primary mb-2">
+    <v-row justify="center" class="mb-6">
+      <v-col cols="12" md="10" class="text-center">
+        <h1 class="text-h4 font-weight-bold text-primary mb-2">
           Model Evaluation Visualizations
         </h1>
-        <p class="text-center text-grey-darken-1">
+        <p class="text-grey-darken-1">
           These visualizations compare CLR vs Rarefied Preprocessing using heatmaps, ROC curves, and metric trend plots for AUC and F1 scores.
         </p>
+        <v-btn class="mt-4" color="primary" @click="toggleAll">
+          {{ allVisible ? 'Hide All' : 'Show All' }}
+        </v-btn>
       </v-col>
     </v-row>
 
@@ -159,63 +162,42 @@ export default {
       showEnsemble: true,
       showCombinedRoc: true,
       ensembleImages: [
-        {
-          label: "Ensemble ROC Curve",
-          path: "/visuals/ensemble/ensemble_roc_curves.png",
-        },
+        { label: "Ensemble ROC Curve", path: "/visuals/ensemble/ensemble_roc_curves.png" },
       ],
       combinedRocImages: [
-        {
-          label: "ROC Curve - All Models (CLR)",
-          path: "/visuals/training/roc_all_models_clr.png",
-        },
-        {
-          label: "ROC Curve - All Models (Rarefied)",
-          path: "/visuals/training/roc_all_models_rarefied.png",
-        },
+        { label: "ROC Curve - All Models (CLR)", path: "/visuals/training/roc_all_models_clr.png" },
+        { label: "ROC Curve - All Models (Rarefied)", path: "/visuals/training/roc_all_models_rarefied.png" },
       ],
       clrImages: [
-        {
-          label: "CLR - Heatmap AUC",
-          path: "/visuals/clr/clr_heatmap_auc.png",
-        },
-        {
-          label: "CLR - Heatmap F1",
-          path: "/visuals/clr/clr_heatmap_f1.png",
-        },
-        {
-          label: "CLR - ROC Curve",
-          path: "/visuals/clr/clr_roc_curve.png",
-        },
-        {
-          label: "CLR - Trend AUC",
-          path: "/visuals/clr/clr_trend_auc.png",
-        },
+        { label: "CLR - Heatmap AUC", path: "/visuals/clr/clr_heatmap_auc.png" },
+        { label: "CLR - Heatmap F1", path: "/visuals/clr/clr_heatmap_f1.png" },
+        { label: "CLR - ROC Curve", path: "/visuals/clr/clr_roc_curve.png" },
+        { label: "CLR - Trend AUC", path: "/visuals/clr/clr_trend_auc.png" },
       ],
       rarefiedImages: [
-        {
-          label: "Rarefied - Heatmap AUC",
-          path: "/visuals/rarefied/rarefied_heatmap_auc.png",
-        },
-        {
-          label: "Rarefied - Heatmap F1",
-          path: "/visuals/rarefied/rarefied_heatmap_f1.png",
-        },
-        {
-          label: "Rarefied - ROC Curve",
-          path: "/visuals/rarefied/rarefied_roc_curve.png",
-        },
-        {
-          label: "Rarefied - Trend AUC",
-          path: "/visuals/rarefied/rarefied_trend_auc.png",
-        },
+        { label: "Rarefied - Heatmap AUC", path: "/visuals/rarefied/rarefied_heatmap_auc.png" },
+        { label: "Rarefied - Heatmap F1", path: "/visuals/rarefied/rarefied_heatmap_f1.png" },
+        { label: "Rarefied - ROC Curve", path: "/visuals/rarefied/rarefied_roc_curve.png" },
+        { label: "Rarefied - Trend AUC", path: "/visuals/rarefied/rarefied_trend_auc.png" },
       ],
     };
+  },
+  computed: {
+    allVisible() {
+      return this.showClr && this.showRarefied && this.showEnsemble && this.showCombinedRoc;
+    },
   },
   methods: {
     openImage(img) {
       this.selectedImage = img;
       this.dialog = true;
+    },
+    toggleAll() {
+      const shouldShow = !this.allVisible;
+      this.showClr = shouldShow;
+      this.showRarefied = shouldShow;
+      this.showEnsemble = shouldShow;
+      this.showCombinedRoc = shouldShow;
     },
   },
 };
