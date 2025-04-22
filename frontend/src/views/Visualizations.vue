@@ -12,13 +12,13 @@
       </v-col>
     </v-row>
 
-    <!-- Ensemble ROC Visuals -->
+    <!-- Ensemble ROC Curve -->
     <v-row justify="center" class="mb-6">
       <v-col cols="12" md="10">
         <v-expand-transition>
           <div>
             <div class="d-flex justify-space-between align-center mb-4">
-              <h2 class="text-h5 font-weight-bold text-primary">Ensemble ROC Visuals</h2>
+              <h2 class="text-h5 font-weight-bold text-primary">Ensemble ROC Curve</h2>
               <v-btn text color="primary" @click="showEnsemble = !showEnsemble">
                 {{ showEnsemble ? 'Hide' : 'Show' }}
               </v-btn>

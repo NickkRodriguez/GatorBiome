@@ -57,6 +57,7 @@
     <!-- Full Table Comparison -->
     <v-row justify="center" class="mb-12">
       <v-col cols="12" md="10">
+        <!-- All Models - CLR -->
         <h2 class="text-h5 font-weight-bold mb-4 text-primary">All Models - CLR</h2>
         <v-data-table
           :headers="headers"
@@ -71,22 +72,32 @@
           :sort-desc="[true]"
         >
           <template #top>
-            <v-text-field v-model="searchClr" label="Search CLR Models..." dense hide-details clearable />
+            <v-text-field
+              v-model="searchClr"
+              label="Search CLR Models..."
+              dense
+              hide-details
+              clearable
+            />
           </template>
+
+          <!-- Highlight row if best -->
           <template #item="{ item }">
             <tr :class="{ 'highlight-row': item.auc === bestClrAuc }">
               <td>{{ item.method }}</td>
               <td>{{ item.type }}</td>
-              <td>{{ item.features }}</td>
-              <td>{{ item.auc.toFixed(3) }}</td>
-              <td>{{ item.accuracy.toFixed(3) }}</td>
-              <td>{{ item.precision.toFixed(3) }}</td>
-              <td>{{ item.recall.toFixed(3) }}</td>
-              <td>{{ item.f1.toFixed(3) }}</td>
+              <td class="text-center">{{ item.features }}</td>
+              <td class="text-center">{{ item.auc.toFixed(3) }}</td>
+              <td class="text-center">{{ item.accuracy.toFixed(3) }}</td>
+              <td class="text-center">{{ item.precision.toFixed(3) }}</td>
+              <td class="text-center">{{ item.recall.toFixed(3) }}</td>
+              <td class="text-center">{{ item.f1.toFixed(3) }}</td>
             </tr>
           </template>
         </v-data-table>
 
+
+        <!-- All Models - Rarefied -->
         <h2 class="text-h5 font-weight-bold mb-4 text-primary">All Models - Rarefied</h2>
         <v-data-table
           :headers="headers"
@@ -101,8 +112,23 @@
           :sort-desc="[true]"
         >
           <template #top>
-            <v-text-field v-model="searchRarefied" label="Search Rarefied Models..." dense hide-details clearable />
+            <v-text-field
+              v-model="searchRarefied"
+              label="Search Rarefied Models..."
+              dense
+              hide-details
+              clearable
+            />
           </template>
+
+          <template #headers="props">
+            <tr>
+              <th v-for="header in props.headers" :key="header.value">
+                {{ header.text }}
+              </th>
+            </tr>
+          </template>
+
           <template #item="{ item }">
             <tr :class="{ 'highlight-row': item.auc === bestRarefiedAuc }">
               <td>{{ item.method }}</td>
