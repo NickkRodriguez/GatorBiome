@@ -15,7 +15,11 @@ import json
 from django.http import HttpResponse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.model_selection import train_test_split
+from utils.models import model_mapping
+import traceback
 class FeatureEngineeringResultsView(APIView):
     def get(self, request):
         dataset_name = request.query_params.get('dataset_name')
@@ -184,16 +188,62 @@ class FileUploadView(APIView):
             return Response({'error': 'File must be a CSV'}, status=status.HTTP_400_BAD_REQUEST)
             
         try:
-            df = pd.read_csv(file_obj)
+            df_test = pd.read_csv(file_obj, index_col=0)
             
+            #loading in model result data
+            model_result_path="../../results/summaries/training_best_models.json"
+            absolute_path = os.path.abspath(model_result_path)
+            with open(absolute_path, 'r') as file:
+                data = json.load(file)
+
+            model_name = ""
+            training_data_path = "" 
+
+            if "rarefied" in file_obj.name:
+                model_name = data['rarefied']['best_model']
+                training_data_path="../../data/rarefied-feature-table-labeled.csv"
+            else:
+                model_name = data['clr']['best_model']
+                training_data_path="../../data/reduced-clr-feature-table-labeled.csv"
+            
+            
+            abs_training_path = os.path.abspath(training_data_path)
+            df_train = pd.read_csv(abs_training_path, index_col=0)
+
+            #preprocessing data (simple)
+            X_train = df_train.drop(columns=["Diagnosis", "Diagnosis_labeled"])
+            y_train = df_train["Diagnosis_labeled"]
+            X_test = df_test.drop(columns=["Diagnosis", "Diagnosis_labeled"])
+            y_test = df_test["Diagnosis_labeled"] #Y_test Should be empty
+            le = LabelEncoder()
+            y_train = le.fit_transform(y_train)
+            y_test = le.fit_transform(y_test)
+
+            vt = VarianceThreshold(threshold=0)
+            X_train = vt.fit_transform(X_train)
+            X_test = vt.transform(X_test)
+            
+            scaler = MinMaxScaler()
+            X_train_scaled = scaler.fit_transform(X_train)
+            X_test_scaled = scaler.transform(X_test)
+
+            pred = []
+            models = {name: model_class() for name, model_class in model_mapping.items()}
+            for name,model in models.items():
+                if(name == model_name):
+                    model.train(X_train_scaled, y_train)
+                    pred = model.model.predict(X_test_scaled)
+
+
+
             return Response({
                 'message': 'File uploaded successfully',
-                'rows': len(df),
-                'columns': list(df.columns)
+                'predictions': pred,
             }, status=status.HTTP_201_CREATED)
             
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            tb = traceback.format_exc()
+            return Response({'error': str(e), 'trace':tb}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class DatasetUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
