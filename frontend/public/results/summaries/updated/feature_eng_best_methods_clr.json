@@ -1,0 +1,15 @@
+[
+    {
+        "dataset": "clr",
+        "model": "Logistic Regression - Elastic Net",
+        "method": "Mutual Information",
+        "n_features": 50,
+        "method_type": "Selection",
+        "AUC": 0.81,
+        "Accuracy": 0.715,
+        "Precision": 0.6519444444444444,
+        "Recall": 0.715,
+        "F1": 0.6603333333333333,
+        "method_id": "clr_Logistic Regression - Elastic Net_Mutual Information_50"
+    }
+]

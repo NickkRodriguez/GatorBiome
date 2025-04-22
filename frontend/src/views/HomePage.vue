@@ -141,7 +141,7 @@ export default {
       stats: [
         {
           icon: "mdi-star-circle",
-          title: "Best Performing Transformation",
+          title: "Best Performing Preprocessing",
           value: "Rarefied",
           animate: false,
           revealed: false,

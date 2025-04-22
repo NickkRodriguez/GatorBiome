@@ -1,0 +1,27 @@
+{
+    "datasets": [
+        "clr",
+        "rarefied"
+    ],
+    "shared_samples": 254,
+    "best_models": {
+        "clr": {
+            "model": "Logistic Regression - Elastic Net",
+            "method": "Mutual Information",
+            "features": 50,
+            "auc_json": 0.81
+        },
+        "rarefied": {
+            "model": "Light Gradient Boosting Model",
+            "method": "ANOVA F-value",
+            "features": 150,
+            "auc_json": 0.855
+        }
+    },
+    "ensemble_aucs": {
+        "soft": 0.8148699807608764,
+        "hard": 0.7265561968596784,
+        "stacking": 0.8154905976540682
+    },
+    "version": "v2"
+}

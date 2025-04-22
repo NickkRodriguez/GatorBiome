@@ -15,38 +15,56 @@
     <!-- CLR Section -->
     <v-row justify="center" class="mb-6">
       <v-col cols="12" md="10">
-        <h2 class="text-h5 font-weight-bold mb-4 text-primary">CLR Transform</h2>
-        <v-row dense>
-          <v-col
-            v-for="(img, i) in clrImages"
-            :key="'clr-' + i"
-            cols="12"
-            md="6"
-            class="mb-6"
-          >
-            <v-card class="overflow-hidden hover-zoom" elevation="3" @click="openImage(img)">
-              <v-img :src="img.path" :alt="img.label" height="300px" />
-              <v-card-title class="font-weight-bold">{{ img.label }}</v-card-title>
-            </v-card>
-          </v-col>
-        </v-row>
+        <v-expand-transition>
+          <div>
+            <div class="d-flex justify-space-between align-center mb-4">
+              <h2 class="text-h5 font-weight-bold text-primary">CLR Transform</h2>
+              <v-btn text color="primary" @click="showClr = !showClr">
+                {{ showClr ? 'Hide' : 'Show' }}
+              </v-btn>
+            </div>
+            <v-row dense v-show="showClr">
+              <v-col
+                v-for="(img, i) in clrImages"
+                :key="'clr-' + i"
+                cols="12"
+                md="6"
+                class="mb-6"
+              >
+                <v-card class="overflow-hidden hover-zoom" elevation="3" @click="openImage(img)">
+                  <v-img :src="img.path" :alt="img.label" height="300px" />
+                  <v-card-title class="font-weight-bold">{{ img.label }}</v-card-title>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
+        </v-expand-transition>
 
         <!-- Rarefied Section -->
-        <h2 class="text-h5 font-weight-bold mt-12 mb-4 text-primary">Rarefied Transform</h2>
-        <v-row dense>
-          <v-col
-            v-for="(img, i) in rarefiedImages"
-            :key="'rarefied-' + i"
-            cols="12"
-            md="6"
-            class="mb-6"
-          >
-            <v-card class="overflow-hidden hover-zoom" elevation="3" @click="openImage(img)">
-              <v-img :src="img.path" :alt="img.label" height="300px" />
-              <v-card-title class="font-weight-bold">{{ img.label }}</v-card-title>
-            </v-card>
-          </v-col>
-        </v-row>
+        <v-expand-transition>
+          <div class="mt-12">
+            <div class="d-flex justify-space-between align-center mb-4">
+              <h2 class="text-h5 font-weight-bold text-primary">Rarefied Transform</h2>
+              <v-btn text color="primary" @click="showRarefied = !showRarefied">
+                {{ showRarefied ? 'Hide' : 'Show' }}
+              </v-btn>
+            </div>
+            <v-row dense v-show="showRarefied">
+              <v-col
+                v-for="(img, i) in rarefiedImages"
+                :key="'rarefied-' + i"
+                cols="12"
+                md="6"
+                class="mb-6"
+              >
+                <v-card class="overflow-hidden hover-zoom" elevation="3" @click="openImage(img)">
+                  <v-img :src="img.path" :alt="img.label" height="300px" />
+                  <v-card-title class="font-weight-bold">{{ img.label }}</v-card-title>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
+        </v-expand-transition>
       </v-col>
     </v-row>
 
@@ -72,6 +90,8 @@ export default {
     return {
       dialog: false,
       selectedImage: { label: "", path: "" },
+      showClr: true,
+      showRarefied: true,
       clrImages: [
         {
           label: "CLR - Heatmap AUC",

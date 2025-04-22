@@ -1,0 +1,2 @@
+dataset,model,method,n_features,method_type,AUC,Accuracy,Precision,Recall,F1,method_id
+clr,Logistic Regression - Elastic Net,Mutual Information,50,Selection,0.81,0.715,0.6519444444444444,0.715,0.6603333333333333,clr_Logistic Regression - Elastic Net_Mutual Information_50

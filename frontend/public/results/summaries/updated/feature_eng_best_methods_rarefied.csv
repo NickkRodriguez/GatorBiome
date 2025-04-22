@@ -1,0 +1,2 @@
+dataset,model,method,n_features,method_type,AUC,Accuracy,Precision,Recall,F1,method_id
+rarefied,Light Gradient Boosting Model,ANOVA F-value,150,Selection,0.855,0.745,0.7019444444444445,0.745,0.6983333333333333,rarefied_Light Gradient Boosting Model_ANOVA F-value_150

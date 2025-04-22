@@ -1,0 +1,22 @@
+{
+  "clr": {
+    "best_model": "Logistic Regression - Elastic Net",
+    "metrics": {
+      "AUC": 0.7720153846153843,
+      "Accuracy": 0.7107843137254899,
+      "Precision": 0.7147512706896925,
+      "Recall": 0.7107843137254899,
+      "F1": 0.7089523807380341
+    }
+  },
+  "rarefied": {
+    "best_model": "Light Gradient Boosting Model",
+    "metrics": {
+      "AUC": 0.7845384615384617,
+      "Accuracy": 0.7064705882352935,
+      "Precision": 0.7167759931690155,
+      "Recall": 0.7064705882352935,
+      "F1": 0.7015994185579087
+    }
+  }
+}
