@@ -1,91 +1,48 @@
 <template>
-  <div>
-    <h2 class="text-h6 font-weight-bold text-primary mb-4">AUC Difference Chart</h2>
-
-    <!-- Filter -->
-    <v-select
-      v-model="selectedMethods"
-      :items="availableMethods"
-      label="Filter by Method"
-      multiple
-      chips
-      clearable
-      class="mb-6"
-    />
-
-    <Bar v-if="chartData" :data="chartData" :options="chartOptions" />
-  </div>
+  <v-card class="pa-4 elevation-3">
+    <h3 class="text-subtitle-1 font-weight-bold mb-4 text-primary">Best Models Performance Comparison</h3>
+    <Bar :data="chartData" :options="chartOptions" />
+  </v-card>
 </template>
 
 <script>
-import { Bar } from "vue-chartjs";
+import { Bar } from 'vue-chartjs';
 import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
+  Chart,
   BarElement,
   CategoryScale,
   LinearScale,
-} from "chart.js";
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default {
   name: "ModelAucComparisonChart",
-  components: {
-    Bar,
-  },
+  components: { Bar },
   props: {
-    clrData: {
-      type: Array,
-      default: () => [],
-    },
-    rarefiedData: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  data() {
-    return {
-      selectedMethods: [],
-    };
+    clrData: Array,
+    rarefiedData: Array,
   },
   computed: {
-    availableMethods() {
-      const methods = new Set(this.clrData.map((row) => row.method));
-      return Array.from(methods).sort();
-    },
     chartData() {
-      if (!this.clrData.length || !this.rarefiedData.length) return null;
-
-      const labels = [];
-      const aucDifferences = [];
-
-      this.clrData.forEach((clrModel) => {
-        const match = this.rarefiedData.find(
-          (r) =>
-            r.method === clrModel.method &&
-            r.type === clrModel.type &&
-            r.features === clrModel.features
-        );
-
-        const shouldInclude =
-          !this.selectedMethods.length || this.selectedMethods.includes(clrModel.method);
-
-        if (match && shouldInclude) {
-          labels.push(clrModel.method);
-          aucDifferences.push(clrModel.auc - match.auc);
-        }
-      });
-
       return {
-        labels,
+        labels: ['AUC', 'Accuracy', 'Precision', 'Recall', 'F1'],
         datasets: [
           {
-            label: "CLR AUC - Rarefied AUC",
-            data: aucDifferences,
-            backgroundColor: "#42a5f5",
+            label: 'Best CLR Model',
+            backgroundColor: '#1976d2',
+            data: [
+              0.772, 0.711, 0.715, 0.711, 0.709 // From best_models.json for CLR
+            ],
+          },
+          {
+            label: 'Best Rarefied Model',
+            backgroundColor: '#4caf50',
+            data: [
+              0.785, 0.706, 0.717, 0.706, 0.702 // From best_models.json for Rarefied
+            ],
           },
         ],
       };
@@ -94,19 +51,13 @@ export default {
       return {
         responsive: true,
         plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: false,
-          },
+          legend: { position: 'top' },
+          tooltip: { enabled: true },
         },
         scales: {
           y: {
-            title: {
-              display: true,
-              text: "Δ AUC",
-            },
+            beginAtZero: true,
+            max: 1,
           },
         },
       };
@@ -116,7 +67,4 @@ export default {
 </script>
 
 <style scoped>
-h2 {
-  margin-bottom: 1rem;
-}
 </style>
