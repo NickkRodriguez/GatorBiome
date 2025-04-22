@@ -288,10 +288,27 @@ class PipelineResultsView(APIView):
                 best_method = None
                 best_auc = 0
                 
-                for model, metrics in results_data.items():
-                    if metrics.get('AUC', 0) > best_auc:
-                        best_auc = metrics.get('AUC', 0)
-                        best_method = model
+                if isinstance(results_data, dict):
+                    for model, metrics in results_data.items():
+                        if isinstance(metrics, dict) and metrics.get('AUC', 0) > best_auc:
+                            best_auc = metrics.get('AUC', 0)
+                            best_method = model
+                    
+                    metrics_data = results_data.get(best_method, {}) if best_method else {}
+                
+                elif isinstance(results_data, list):
+                    for item in results_data:
+                        if isinstance(item, dict):
+                            model_name = item.get('model', '')
+                            auc_score = item.get('AUC', 0)
+                            if auc_score > best_auc:
+                                best_auc = auc_score
+                                best_method = model_name
+                                metrics_data = item
+                    
+                    if not best_method and results_data:
+                        best_method = results_data[0].get('model', 'Unknown')
+                        metrics_data = results_data[0]
                 
                 image_files = {}
                 if os.path.exists(visuals_dir):
@@ -304,7 +321,7 @@ class PipelineResultsView(APIView):
                 
                 response = {
                     'best_method': best_method,
-                    'metrics': results_data.get(best_method, {}),
+                    'metrics': metrics_data,
                     'all_results': results_data,
                     'file_paths': {
                         'json': results_file,

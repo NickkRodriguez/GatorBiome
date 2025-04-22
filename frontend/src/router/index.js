@@ -5,6 +5,7 @@ import AboutPage from '../views/About.vue'
 import VisualizationsPage from '../views/Visualizations.vue'
 import ModelsPage from '../views/Models.vue'
 import DatasetsPage from '../views/Datasets.vue'
+import UploadTester from '../views/UploadTester.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomePage },
@@ -12,7 +13,8 @@ const routes = [
   { path: '/about', name: 'about', component: AboutPage },
   { path: '/visualizations', name: 'visualizations', component: VisualizationsPage },
   { path: '/models', name: 'models', component: ModelsPage },
-  { path: '/datasets', name: 'datasets', component: DatasetsPage }
+  { path: '/datasets', name: 'datasets', component: DatasetsPage },
+  { path: '/upload-tester', name: 'upload-tester', component: UploadTester }
 ]
 
 const router = createRouter({

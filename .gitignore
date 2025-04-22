@@ -5,6 +5,7 @@ data/*.csv
 frontend/node_modules/
 frontend/dist/
 frontend/.cache/
+frontend/package-lock.json
 
 # Virtual environments
 venv/
