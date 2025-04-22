@@ -30,55 +30,34 @@
       </v-col>
     </v-row>
 
-<!-- Architecture Diagram -->
-<v-row justify="center" class="mb-10">
+    <!-- Pipeline Architecture Image -->
+    <v-row justify="center" class="mb-10">
       <v-col cols="12" md="10">
         <h2 class="text-h5 font-weight-bold mb-4 text-primary">Pipeline Architecture</h2>
-        <div class="diagram-wrapper">
-          <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
-            <!-- Background -->
-            <rect x="10" y="10" width="850" height="500" fill="none" stroke="#bbb" stroke-dasharray="5,5"/>
-            <text x="15" y="30" font-size="16" fill="#555">Back End</text>
-
-            <rect x="880" y="10" width="300" height="500" fill="none" stroke="#bbb" stroke-dasharray="5,5"/>
-            <text x="885" y="30" font-size="16" fill="#555">Front End</text>
-
-            <!-- Boxes -->
-            <g v-for="(box, i) in boxes" :key="i">
-              <rect :x="box.x" :y="box.y" :width="box.width" :height="box.height" :fill="box.fill"
-                    stroke="#000" stroke-width="1.5" rx="6"/>
-              <text :x="box.x + box.width / 2" :y="box.y + 25" dominant-baseline="middle" text-anchor="middle"
-                    font-weight="bold" font-size="14">
-                {{ box.title }}
-              </text>
-              <text v-if="box.subtitle" :x="box.x + box.width / 2" :y="box.y + 45" text-anchor="middle"
-                    font-size="12" fill="#333">
-                {{ box.subtitle }}
-              </text>
-            </g>
-
-            <!-- Arrows -->
-            <g v-for="(arrow, i) in arrows" :key="i">
-              <line :x1="arrow.x1" :y1="arrow.y1" :x2="arrow.x2" :y2="arrow.y2" stroke="#000" stroke-width="2"
-                    marker-end="url(#arrowhead)"/>
-              <text v-if="arrow.label" :x="(arrow.x1 + arrow.x2) / 2" :y="(arrow.y1 + arrow.y2) / 2 - 5"
-                    text-anchor="middle" font-size="12" fill="#000">
-                {{ arrow.label }}
-              </text>
-            </g>
-
-            <!-- Arrowhead -->
-            <defs>
-              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
-              </marker>
-            </defs>
-          </svg>
-        </div>
+        <v-img
+          src="/pipeline_rep.png"
+          alt="Pipeline Diagram"
+          max-width="100%"
+          class="rounded elevation-2 hover-zoom"
+          @click="dialog = true"
+        />
       </v-col>
     </v-row>
 
-    <!-- Expandable Pipeline Highlights -->
+    <!-- Fullscreen Dialog for Architecture Image -->
+    <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <v-card>
+        <v-toolbar dense flat color="primary">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title class="white--text">Pipeline Architecture</v-toolbar-title>
+        </v-toolbar>
+        <v-img src="/pipeline_rep.png" class="fill-height" contain />
+      </v-card>
+    </v-dialog>
+
+    <!-- Pipeline Highlights -->
     <v-row justify="center" class="mb-12">
       <v-col cols="12" md="10">
         <v-card elevation="3" class="pa-6 card-highlight">
@@ -160,6 +139,7 @@ export default {
   name: "AboutPage",
   data() {
     return {
+      dialog: false,
       showHighlights: false,
       animatedHighlights: [],
       highlights: [
@@ -188,28 +168,6 @@ export default {
           description: "Includes ROC curves, heatmaps, and dimensionality plots to interpret model performance.",
         },
       ],
-      boxes: [
-        { title: "Gut Microbiome Dataset", x: 130, y: 100, width: 180, height: 60, fill: "#42A5F5" },
-        { title: "Training Loop", subtitle: "ML Libraries", x: 350, y: 100, width: 200, height: 80, fill: "#42A5F5" },
-        { title: "Trained Model", x: 580, y: 110, width: 140, height: 60, fill: "#66BB6A" },
-        { title: "Testing Data", x: 350, y: 240, width: 160, height: 60, fill: "#42A5F5" },
-        { title: "Model Prediction", x: 530, y: 240, width: 180, height: 60, fill: "#66BB6A" },
-        { title: "User Input", subtitle: "Testing Data", x: 1020, y: 180, width: 160, height: 60, fill: "#EF5350" },
-        { title: "Results Displayed", subtitle: "Matplotlib", x: 550, y: 360, width: 160, height: 60, fill: "#42A5F5" },
-      ],
-
-      arrows: [
-        { x1: 310, y1: 130, x2: 350, y2: 130, label: "Training Data" },
-        { x1: 550, y1: 130, x2: 580, y2: 130 },
-        { x1: 420, y1: 180, x2: 420, y2: 240, label: "Testing Data Split" },
-        { x1: 510, y1: 270, x2: 530, y2: 270 },
-        { x1: 710, y1: 270, x2: 1020, y2: 210, label: "UI Input" },
-        { x1: 620, y1: 300, x2: 630, y2: 360, label: "UI Output" },
-        { x1: 350, y1: 100, x2: 350, y2: 90 },
-        { x1: 350, y1: 90, x2: 550, y2: 90 },
-        { x1: 550, y1: 90, x2: 550, y2: 100, label: "Repeat 100 Times" },
-      ],
-
       team: [
         {
           name: "Nick Rodriguez",
@@ -279,5 +237,12 @@ export default {
   box-shadow: 0 8px 18px rgba(33, 150, 243, 0.25);
   border-color: rgba(33, 150, 243, 0.5);
   background-color: rgba(33, 150, 243, 0.03);
+}
+.hover-zoom {
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
+.hover-zoom:hover {
+  transform: scale(1.01);
 }
 </style>
