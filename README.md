@@ -92,12 +92,15 @@ The team aims to develop a **machine learning algorithm** that maps human gut mi
 
 To run the GatorBiome app via the local website, you must upload **two `.csv` datasets** that follow the exact format below.
 
+**Note:** In this version of the demo, some components may display static visualizations based on precomputed results.  
+The full backend-to-frontend integration is supported by the architecture, and dynamic behavior can be enabled with minimal adjustments.  
+
 ---
 
 ### 📂 File & Upload Rules
 
 - Upload exactly **two `.csv` files** using the upload form on the homepage
-- File names can be anything (e.g., `clr.csv`, `set2.csv`, etc.)
+- - File names can be anything (e.g., `clr.csv`, `set2.csv`, etc.) as long as they are **not identical**
 - Files must **not** contain slashes (`/`, `\`) or be hidden files (no leading `.`)
 - Files are saved into the backend's `./data/` folder automatically
 
